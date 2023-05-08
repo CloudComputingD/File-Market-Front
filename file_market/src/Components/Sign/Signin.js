@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import styles from "../../assets/css/Sign/Signin.module.css";
 
 const LeftBlock = () => {
@@ -17,6 +18,7 @@ const checkSigninAvailable = (id, pw) => {
 }
 
 const RightBlock = () => {
+    const navigate = useNavigate();
     const [idValue, setId] = useState('');
     const [pwValue, setPw] = useState('');
 
@@ -53,7 +55,7 @@ const RightBlock = () => {
                     </div>
                     <div className={styles.signin_button_wrapper}>
                         <button className={styles.signin_button}
-                            onClick={() => {}}
+                            onClick={() => {navigate('signup')}}
                             >Sign up
                         </button>
                         <button className={styles.signin_button}
