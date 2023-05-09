@@ -1,0 +1,23 @@
+.userprofile_wrapper {
+    width: 100px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.userprofile_circular_image_border {
+    width: 60px;
+    height: 60px;
+    border-width: 2px;
+    border-color: black;
+    border-style: solid;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center; 
+}
+
+.userprofile_image {
+    width: 100%;
+}
