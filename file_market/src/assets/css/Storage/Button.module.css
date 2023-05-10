@@ -1,0 +1,38 @@
+.btn_upload {
+    border-color: blue;
+    border-width: 2px;
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: blue;
+    color: white;
+    margin: 5px;
+    display: flex;
+    float: left;
+}
+
+.img_upload {
+    filter: invert(100%);
+}
+
+.text_wrapper {
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.btn_else {
+    padding: 5px 10px;
+    border-radius: 10px;
+    text-decoration: none;
+    background-color: white;
+    border-color: blue;
+    border-width: 2px;
+    color: blue;
+    margin: 5px;
+    display: flex;
+    float: left;
+}
+
+.img_else {
+    filter: invert(7%) sepia(99%) saturate(7453%) hue-rotate(249deg) brightness(107%) contrast(143%);
+}
