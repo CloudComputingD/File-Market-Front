@@ -1,0 +1,11 @@
+.storage_wrapper {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.storage_block_wrapper {
+    height: 100%;
+    display: flex;
+    flex-direction: row;
+}
