@@ -48,7 +48,7 @@ const StorageMenu = (props) => {
       <button
         className={button_style}
         onClick={() => {
-          alert("Storage");
+          props.navigate("/storage");
         }}
       >
         <div className={styles.sidebar_menu_button_toggle_image_wrapper}>
