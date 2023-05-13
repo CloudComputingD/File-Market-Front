@@ -9,3 +9,8 @@
     display: flex;
     flex-direction: row;
 }
+
+.storage_block {
+    display: flex;
+    width: 85%;
+}
