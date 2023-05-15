@@ -4,7 +4,7 @@
     border-right-style: solid;
     display: flex;
     flex-direction: column;
-    width: 80%;
+    width: 78%;
     align-content: flex-start;
 }
 
@@ -35,14 +35,6 @@
     color: #353535;
 }
 
-.btn {
-    /* width: 320px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin-right: 20px; */
-}
 
 .btn_upload {
     border-color: #670FDF;

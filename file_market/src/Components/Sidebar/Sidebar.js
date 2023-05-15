@@ -4,7 +4,7 @@ import DashboardIcon from "../../assets/image/dashboardicon.png";
 import StorageIcon from "../../assets/image/storageicon.png";
 import UntoggledIcon from "../../assets/image/untoggledicon.png";
 import ToggledIcon from "../../assets/image/toggledicon.png";
-import FavoriteIcon from "../../assets/image/favoriteicon.png";
+import FavoriteIcon from "../../assets/image/blackstaricon.png";
 import BinIcon from "../../assets/image/binicon.png";
 import styles from "../../assets/css/Sidebar/Sidebar.module.css";
 
