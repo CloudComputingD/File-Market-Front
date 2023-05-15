@@ -1,0 +1,31 @@
+.fileinfo_wrapper {
+    width: 20%;
+}
+
+.fileinfo_header_wrapper {
+    width: 100%;
+    height: 100px;
+    border-bottom: 2px solid #acacac;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.fileinfo_header {
+    margin: 20px;
+    width: 100%;
+    font-size: 30px;
+    display: flex;
+    flex-direction: row;
+}
+
+.header_image {
+    width: 40px;
+    height: 40px;
+    margin-right: 10px;
+}
+
+.fileinfo_block_wrapper {
+    width: 100%;
+    height: 780px;
+}

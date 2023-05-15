@@ -4,6 +4,7 @@ import Signin from "./Components/Sign/Signin";
 import Signup from "./Components/Sign/Signup";
 import Storage from "./Components/Storage/Storage";
 import Dashboard from "./Components/Dashboard/Dashboard";
+import Bin from './Components/Bin/Bin';
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
         <Route path="signup" element={<Signup />} />
         <Route path="storage" element={<Storage />} />
         <Route path='dashboard' element={<Dashboard />}/>
+        <Route path='bin' element={<Bin />}/>
       </Routes>
     </BrowserRouter>
   );
