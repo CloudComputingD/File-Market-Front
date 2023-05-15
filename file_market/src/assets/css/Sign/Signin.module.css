@@ -1,3 +1,10 @@
+.signin {
+    height: 100vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
 .left_block_wrapper {
     width: 40%;
     background-color: #acacac;
@@ -28,28 +35,14 @@
     width: 500px;
 }
 
-.signin_id_input_wrapper {
+.signin_input_wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
 }
 
-.signin_id_input {
-    width: 400px;
-    height: 40px;
-    font-size: 20px;
-    padding-left: 10px;
-}
-
-.signin_password_input_wrapper {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 50px;
-}
-
-.signin_password_input {
+.signin_input {
     width: 400px;
     height: 40px;
     font-size: 20px;
