@@ -29,7 +29,7 @@ const RightBlock = () => {
                     File Market
                 </div>
                 <div className={styles.signin_block_wrapper}>
-                    <div className={styles.signin_id_input_wrapper}>
+                    <div className={styles.signin_input_wrapper}>
                         <input
                             id="id_input"
                             name="id_input"
@@ -38,10 +38,10 @@ const RightBlock = () => {
                             onChange={(event) => {
                                 setId(event.target.value);
                             }}
-                            className={styles.signin_id_input}
+                            className={styles.signin_input}
                         />
                     </div>
-                    <div className={styles.signin_password_input_wrapper}>
+                    <div className={styles.signin_input_wrapper}>
                         <input
                             id="pw_input"
                             name="pw_input"
@@ -50,7 +50,7 @@ const RightBlock = () => {
                             onChange={(event) => {
                                 setPw(event.target.value);
                             }}
-                            className={styles.signin_password_input}
+                            className={styles.signin_input}
                         />
                     </div>
                     <div className={styles.signin_button_wrapper}>
@@ -61,6 +61,7 @@ const RightBlock = () => {
                         <button className={styles.signin_button}
                             onClick={() => {
                                 if (checkSigninAvailable(idValue, pwValue)) {
+                                    navigate('/dashboard');
                                 } else {
                                     alert("Fail");
                                 }
@@ -76,7 +77,7 @@ const RightBlock = () => {
 
 const Signin = () => {
     return(
-        <div style={{ height: '100vh', display: 'flex', flexDirection: 'row', justifyContent: 'space-evenly' }}>
+        <div className={styles.signin}>
             <LeftBlock />
             <RightBlock />
         </div>
