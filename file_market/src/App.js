@@ -73,7 +73,7 @@ const dummyFileList = [
     created_time: new Date().getTime(),
     deleted_time: new Date().getTime(),
     folder_id: 4,
-    favorite: true,
+    favorite: false,
     user_id: 3,
     trash: true,
     size: 645352,
@@ -109,7 +109,7 @@ const dummyFileList = [
     created_time: new Date().getTime(),
     deleted_time: new Date().getTime(),
     folder_id: 2,
-    favorite: false,
+    favorite: true,
     user_id: 2,
     trash: true,
     size: 34543653,
@@ -119,11 +119,11 @@ const dummyFileList = [
     id: 10,
     title: "1차시보고서.hwp",
     created_time: new Date().getTime(),
-    deleted_time: null,
+    deleted_time: new Date().getTime(),
     folder_id: 2,
     favorite: false,
     user_id: 2,
-    trash: false,
+    trash: true,
     size: 524234,
   },
 ];
@@ -180,9 +180,24 @@ function App() {
       <Routes>
         <Route path="/" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
-        <Route path="storage" element={<Storage />} />
-        <Route path="dashboard" element={<Dashboard />} />
-        <Route path="bin" element={<Bin />} />
+        <Route
+          path="storage"
+          element={
+            <Storage fileList={dummyFileList} folderList={dummyFolderList} />
+          }
+        />
+        <Route
+          path="dashboard"
+          element={
+            <Dashboard fileList={dummyFileList} folderList={dummyFolderList} />
+          }
+        />
+        <Route
+          path="bin"
+          element={
+            <Bin fileList={dummyFileList} folderList={dummyFolderList} />
+          }
+        />
       </Routes>
     </BrowserRouter>
   );
