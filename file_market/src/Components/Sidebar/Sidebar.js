@@ -77,7 +77,7 @@ const FavoriteMenu = (props) => {
       <button
         className={button_style}
         onClick={() => {
-          alert("Favorite");
+          props.navigate("/favorite");
         }}
       >
         <div className={styles.sidebar_menu_button_image_wrapper}>

@@ -5,6 +5,7 @@ import Signup from "./Components/Sign/Signup";
 import Storage from "./Components/Storage/Storage";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Bin from "./Components/Bin/Bin";
+import Favorite from "./Components/Favorite/Favorite";
 
 const dummyFileList = [
   {
@@ -181,15 +182,21 @@ function App() {
         <Route path="/" element={<Signin />} />
         <Route path="signup" element={<Signup />} />
         <Route
+          path="dashboard"
+          element={
+            <Dashboard fileList={dummyFileList} folderList={dummyFolderList} />
+          }
+        />
+        <Route
           path="storage"
           element={
             <Storage fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
-          path="dashboard"
+          path="favorite"
           element={
-            <Dashboard fileList={dummyFileList} folderList={dummyFolderList} />
+            <Favorite fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
