@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import styles from "../../assets/css/Storage/FileList.module.css";
 import uploadIcon from "../../assets/image/uploadicon.png";
 import downloadIcon from "../../assets/image/downloadicon.png";
@@ -8,7 +8,19 @@ import binIcon from "../../assets/image/binicon.png";
 import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
 
-const Button = ({ onEdit, onRemove }) => {
+const Button = ({
+  onRename,
+  onDelete,
+  onNewFolder,
+  selectedFolder,
+  selectedFile,
+}) => {
+  const handleNewFolderClick = () => {
+    if (onNewFolder) {
+      onNewFolder();
+    }
+  };
+
   return (
     <div className={styles.btn_wrapper}>
       <div className={styles.btn_title_wrapper}>FolderName</div>
@@ -24,6 +36,7 @@ const Button = ({ onEdit, onRemove }) => {
             src={uploadIcon}
             height={14}
             width={14}
+            alt="uploadIcon"
           />
           <div className={styles.text_wrapper}>&nbsp;Upload</div>
         </button>
@@ -39,46 +52,46 @@ const Button = ({ onEdit, onRemove }) => {
             src={downloadIcon}
             height={14}
             width={14}
+            alt="donwloadIcon"
           />
           <div className={styles.text_wrapper}>&nbsp;Download</div>
         </button>
 
-        <button
-          className={styles.btn_else}
-          onClick={() => {
-            alert("Make Folder");
-          }}
-        >
+        <button className={styles.btn_else} onClick={handleNewFolderClick}>
           <img
             className={styles.img_else}
             src={newFolderIcon}
             height={14}
             width={14}
+            alt="newFolderIcon"
           />
           <div className={styles.text_wrapper}>&nbsp;New Folder</div>
         </button>
 
         <button
           className={styles.btn_else}
-          onClick={() => {
-            alert("Rename Folder or File");
-          }}
+          onClick={() => onRename(selectedFolder, selectedFile)}
         >
           <img
             className={styles.img_else}
             src={renameIcon}
             height={14}
             width={14}
+            alt="renameIcon"
           />
           <div className={styles.text_wrapper}>&nbsp;Rename</div>
         </button>
 
-        <button className={styles.btn_else} onClick={onRemove}>
+        <button
+          className={styles.btn_else}
+          onClick={() => onDelete(selectedFolder, selectedFile)}
+        >
           <img
             className={styles.img_else}
             src={binIcon}
             height={14}
             width={14}
+            alt="binIcon"
           />
           <div className={styles.text_wrapper}>&nbsp;Delete</div>
         </button>
@@ -87,15 +100,37 @@ const Button = ({ onEdit, onRemove }) => {
   );
 };
 
-const Files = ({ fileList }) => {
-  const [files, setFiles] = useState([]);
+const Files = ({ fileList, onFileSelect }) => {
+  const [hoveredFile, setHoveredFile] = useState(null);
+
+  const handleFileClick = (file) => {
+    onFileSelect(file);
+  };
+
+  const handleFileMouseEnter = (file) => {
+    setHoveredFile(file);
+  };
+
+  const handleFileMouseLeave = () => {
+    setHoveredFile(null);
+  };
 
   return (
     <div className={styles.files_wrapper}>
       <h2 className={styles.filelist_title_wrapper}>파일</h2>
       <div className={styles.files_body}>
         {fileList.map((file) => (
-          <div className={styles.files_each} key={file.id}>
+          <div
+            className={styles.files_each}
+            key={file.id}
+            onClick={() => handleFileClick(file)}
+            onMouseEnter={() => handleFileMouseEnter(file)}
+            onMouseLeave={handleFileMouseLeave}
+            style={{
+              background: hoveredFile === file ? "lightblue" : "transparent",
+              fontWeight: hoveredFile === file ? "bold" : "normal",
+            }}
+          >
             <img
               className={styles.folderIcon}
               src={fileIcon}
@@ -110,15 +145,38 @@ const Files = ({ fileList }) => {
   );
 };
 
-const Folders = ({ folderList }) => {
-  const [folders, setFolders] = useState([]);
+const Folders = ({ folderList, onFolderSelect }) => {
+  const [hoveredFolder, setHoveredFolder] = useState(null);
+
+  const handleFolderClick = (folder) => {
+    onFolderSelect(folder);
+  };
+
+  const handleFolderMouseEnter = (folder) => {
+    setHoveredFolder(folder);
+  };
+
+  const handleFolderMouseLeave = () => {
+    setHoveredFolder(null);
+  };
 
   return (
     <div className={styles.files_wrapper}>
       <h2 className={styles.filelist_title_wrapper}>폴더</h2>
       <div className={styles.files_body}>
         {folderList.map((folder) => (
-          <div className={styles.files_each} key={folder.id}>
+          <div
+            className={styles.files_each}
+            key={folder.id}
+            onClick={() => handleFolderClick(folder)}
+            onMouseEnter={() => handleFolderMouseEnter(folder)}
+            onMouseLeave={handleFolderMouseLeave}
+            style={{
+              background:
+                hoveredFolder === folder ? "lightblue" : "transparent",
+              fontWeight: hoveredFolder === folder ? "bold" : "normal",
+            }}
+          >
             <img
               className={styles.folderIcon}
               src={folderIcon}
@@ -133,18 +191,31 @@ const Folders = ({ folderList }) => {
   );
 };
 
-const FileList = ({ fileList, folderList, onRemove }) => {
-  // function handleRemove() {
-  //   if (window.confirm(`${id}번째 파일/폴더를 정말 삭제하시겠습니까?`)) {
-  //     onRemove(id);
-  //   }
-  // }
+const FileList = ({
+  fileList,
+  onFileSelect,
+  folderList,
+  onFolderSelect,
+  selectedFolder,
+  selectedFile,
+  onDelete,
+  onNewFolder,
+  onRename,
+}) => {
   return (
     <div className={styles.filelist_wrapper}>
-      {/* <Button handleRemove={handleRemove}></Button> */}
-      <Button></Button>
-      <Folders folderList={folderList}></Folders>
-      <Files fileList={fileList}></Files>
+      <Button
+        onNewFolder={onNewFolder}
+        onDelete={onDelete}
+        selectedFolder={selectedFolder}
+        selectedFile={selectedFile}
+        onRename={onRename}
+      ></Button>
+      <Folders
+        folderList={folderList}
+        onFolderSelect={onFolderSelect}
+      ></Folders>
+      <Files fileList={fileList} onFileSelect={onFileSelect}></Files>
     </div>
   );
 };
