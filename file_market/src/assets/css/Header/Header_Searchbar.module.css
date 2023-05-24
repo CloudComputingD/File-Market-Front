@@ -12,9 +12,11 @@
     height: 40px;
     padding: 10px;
     margin-right: 5px;
+    font-family: 'Lato';
 }
 
 .search_button {
     width: 60px;
     height: 40px;
+    font-family: 'Lato';
 }
