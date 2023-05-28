@@ -42,7 +42,7 @@ const StorageMenu = (props) => {
       ? styles.sidebar_curpage_menu_button
       : styles.sidebar_normal_menu_button;
   const toggle = props.currentPage === "storage" ? ToggledIcon : UntoggledIcon;
-
+  
   return (
     <div className={styles.sidebar_menu_button_wrapper}>
       <button

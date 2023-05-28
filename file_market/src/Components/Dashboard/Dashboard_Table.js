@@ -53,28 +53,24 @@ const OrderedTable = (props) => {
                                     {index + 1}
                                 </div>
                                 <div className={styles.item_column_wrapper}>
-                                    {file.name}
+                                    {file.title}
                                 </div>
                                 <div className={styles.item_column_wrapper}>
-                                    {props.curMode === 'size' ? FormatBytes(file.size) : file.date}
+                                    {props.curMode === 'size' ? FormatBytes(file.size) : file.created_time}
                                 </div>
                             </div>
                         )
                     }
                 })}
-            </div>
-            {() => {
-                if (orderedFileList.length >= 10) {
-                    return(
-                        <div className={styles.more_button_wrapper}>
-                            <button
-                                className={styles.more_button}>
-                                more button
-                            </button>
-                        </div>
-                    )
+                { orderedFileList.length >= 10 ? 
+                    <div className={styles.more_button_wrapper}>
+                        <button
+                            className={styles.more_button}>
+                            more button
+                        </button>
+                    </div>: null
                 }
-            }}
+            </div>
         </div>
     )
 }
@@ -111,7 +107,7 @@ const FileTable = (props) => {
         } else {
             setOrderedFileList(
                 [...orderedFileList].sort(function (a, b) {
-                    return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+                    return a.created_time < b.created_time ? -1 : a.created_time > b.created_time ? 1 : 0;
                 })
             );
         }

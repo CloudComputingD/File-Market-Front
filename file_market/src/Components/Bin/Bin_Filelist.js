@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from '../../assets/css/Bin/Bin_Filelist.module.css';
 import RestoreIcon from '../../assets/image/restoreicon.png';
 import DeleteIcon from '../../assets/image/deleteicon.png';
+import { FormatBytes } from '../../logics/FormatBytes';
 
 const DirectoryNameandButtonBar = (props) => {
     return(
@@ -72,13 +73,13 @@ const FileListTable = (props) => {
                     />
             </div>
             <div className={styles.table_filename_column}>
-                {fileInfo.name}
+                {fileInfo.title}
             </div>
             <div className={styles.table_deleted_date_column}>
-                {fileInfo.deleted_date}
+                {fileInfo.deleted_time}
             </div>
             <div className={styles.table_size_column}>
-                {fileInfo.size}
+                {FormatBytes(fileInfo.size)}
             </div>
         </div>
     )
@@ -87,13 +88,16 @@ const FileListTable = (props) => {
 
 const FileListBlock = (props) => {
     const fileList = props.fileList;
+
     return(
         <div className={styles.filelist_block_wrapper}>
             <TableHeader checkItems={props.checkItems} handleAllCheck={props.handleAllCheck} numberOfFiles={fileList.length} />
             { fileList.map((file, index) => {
-                return(
-                    <FileListTable checkItems={props.checkItems} index={index} handleSingleCheck={props.handleSingleCheck} fileInfo={file} />
-                )
+                if (file.deleted_time !== null) {
+                    return(
+                        <FileListTable checkItems={props.checkItems} index={index} handleSingleCheck={props.handleSingleCheck} fileInfo={file} />
+                    )
+                }
             })}
         </div>
     )
@@ -101,7 +105,19 @@ const FileListBlock = (props) => {
 
 const FileList = (props) => {
     const tempFileList = props.tempFileList;
+
+    const [deletedFileList, setDeletedFileList] = useState([]);
     const [checkItems, setCheckItems] = useState([]);
+
+    useEffect(() => {
+        const arr = [];
+        tempFileList.forEach((el) => {
+            if (el.deleted_time !== null) {
+                arr.push(el);
+            }
+        })
+        setDeletedFileList(arr);
+    }, [])
 
     function handleSingleCheck(checked, id) {
         if (checked) {
@@ -114,7 +130,7 @@ const FileList = (props) => {
     function handleAllCheck(checked) {
         if (checked) {
             const idArray = [];
-            tempFileList.forEach((el) => {
+            deletedFileList.forEach((el) => {
                 idArray.push(el.id);
             })
             setCheckItems(idArray);
@@ -138,7 +154,7 @@ const FileList = (props) => {
     return(
         <div className={styles.filelist_wrapper}>
             <DirectoryNameandButtonBar handleRestore={handleRestore} handleDelete={handleDelete}/>
-            <FileListBlock checkItems={checkItems} handleSingleCheck={handleSingleCheck} handleAllCheck={handleAllCheck} fileList={tempFileList}/>
+            <FileListBlock checkItems={checkItems} handleSingleCheck={handleSingleCheck} handleAllCheck={handleAllCheck} fileList={deletedFileList}/>
         </div>
     )
 }

@@ -91,7 +91,7 @@ const Favorite = ({ fileList, folderList }) => {
     <div className={styles.storage_wrapper}>
       <Header></Header>
       <div className={styles.storage_block_wrapper}>
-        <Sidebar currentPage="storage" />
+        <Sidebar currentPage="favorite" />
         <div className={styles.storage_block}>
           <FileList
             onDelete={handleDelete}

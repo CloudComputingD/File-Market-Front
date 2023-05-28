@@ -4,9 +4,9 @@ import FileTable from './Dashboard_Table';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import styles from '../../assets/css/Dashboard/Dashboard.module.css';
-import { tempFileList } from '../../tempdata/tempData';
 
-const Dashboard = () => {
+const Dashboard = (props) => {
+    const tempFileList = props.fileList;
     const fileList = (() => {
         const arr = [];
         tempFileList.forEach((el) => {

@@ -3,6 +3,7 @@ import favoriteIcon from "../../assets/image/blackstaricon.png";
 import infoIcon from "../../assets/image/infoicon.png";
 import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
+import { FormatBytes } from "../../logics/FormatBytes";
 
 const FavoriteFile = ({ file, folder }) => {
   if (file) {
@@ -55,7 +56,7 @@ const Information = ({ file, folder }) => {
           <br></br>
           Author id: {file.user_id}
           <br></br>
-          Size: {file.size}
+          Size: {FormatBytes(file.size)}
           <br></br>
           Uploaded: {file.created_time}
         </div>
@@ -76,7 +77,7 @@ const Information = ({ file, folder }) => {
           <br></br>
           Author id: {folder.user_id}
           <br></br>
-          Size: {folder.size}
+          Size: {FormatBytes(folder.size)}
           <br></br>
           Uploaded: {folder.created_time}
         </div>
