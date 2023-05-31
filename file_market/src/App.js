@@ -129,6 +129,30 @@ const dummyFileList = [
     trash: true,
     size: 524234,
   },
+
+  {
+    id: 11,
+    title: "3D 입체음향 시스템.pdf",
+    created_time: new Date().getTime(),
+    deleted_time: null,
+    folder_id: null,
+    favorite: true,
+    user_id: 2,
+    trash: false,
+    size: 43402,
+  },
+
+  {
+    id: 12,
+    title: "김민석 바보.pdf",
+    created_time: new Date().getTime(),
+    deleted_time: null,
+    folder_id: 1,
+    favorite: true,
+    user_id: 2,
+    trash: false,
+    size: 42402,
+  },
 ];
 
 const dummyFolderList = [
@@ -218,6 +242,12 @@ function App() {
           element={
             <Signup colorTheme={colorTheme}
           />}
+        />
+        <Route
+          path="storage/:folder_id"
+          element={
+            <Storage fileList={dummyFileList} folderList={dummyFolderList} />
+          }
         />
         <Route
           path="dashboard"

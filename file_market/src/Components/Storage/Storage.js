@@ -6,9 +6,14 @@ import styles from "../../assets/css/Storage/Storage.module.css";
 import FileList from "./FileList";
 import FileInfo from "./FileInfo";
 
+<<<<<<< HEAD
 const Storage = (props) => {
   const navigate = useNavigate();
   const [files, setFiles] = useState(props.fileList); // file lsit
+=======
+const Storage = ({ fileList, folderList }) => {
+  const [files, setFiles] = useState(fileList); // file list
+>>>>>>> 0238382a930ac7458880f700cb0a842c1e7899e2
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -23,6 +28,20 @@ const Storage = (props) => {
   const handleFolderSelect = (folder) => {
     setSelectedFolder(folder);
   };
+
+  const [currentFolderId, setCurrentFolderId] = useState(null); // 더블클릭한 folder's id
+  const [currentFolderName, setCurrentFolderName] = useState("Root");
+
+  const handleFolderDoubleClick = (folder) => {
+    setCurrentFolderId(folder.id);
+    setCurrentFolderName(folder.title);
+  };
+
+  // 선택된 폴더의 하위 파일 & 폴더 필터링
+  const filteredFiles = files.filter(
+    (file) => file.folder_id === currentFolderId
+  );
+  //const filteredFolders = folders.filter((folder) => folder.parentId === selectedFolderId);
 
   const handleNewFolder = () => {
     const folderName = prompt("Enter folder name!");
@@ -92,11 +111,15 @@ const Storage = (props) => {
           <FileList
             onDelete={handleDelete}
             fileList={files}
+            filteredFileList={filteredFiles}
             folderList={folders}
+            //filteredFolderList={filteredFolders}
             selectedFolder={selectedFolder}
             selectedFile={selectedFile}
+            currentFolderName={currentFolderName}
             onFileSelect={handleFileSelect}
             onFolderSelect={handleFolderSelect}
+            onFolderDoubleClick={handleFolderDoubleClick}
             onNewFolder={handleNewFolder}
             onRename={handleRename}
           ></FileList>

@@ -10,7 +10,7 @@ const Favorite = (props) => {
   const navigate = useNavigate();
   const favoriteFileList = props.fileList.filter((file) => file.favorite === true);
 
-  const [files, setFiles] = useState(favoriteFileList);
+  const [files, setFiles] = useState(favoriteFileList); // favorite file list
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -22,13 +22,29 @@ const Favorite = (props) => {
     (folder) => folder.favorite === true
   );
 
-  const [folders, setFolders] = useState(favoriteFolderList); // folder list
+  const [folders, setFolders] = useState(favoriteFolderList); // favorite folder list
 
   const [selectedFolder, setSelectedFolder] = useState(null);
 
   const handleFolderSelect = (folder) => {
     setSelectedFolder(folder);
   };
+
+  const [currentFolderId, setCurrentFolderId] = useState(false); // 더블클릭한 folder's id
+  const [currentFolderName, setCurrentFolderName] = useState("Root");
+
+  const handleFolderDoubleClick = (folder) => {
+    setCurrentFolderId(folder.id);
+    setCurrentFolderName(folder.title);
+  };
+
+  // 선택된 폴더의 하위 파일 & 폴더 필터링
+  const filteredFavoriteFiles = fileList.filter((file) =>
+    currentFolderId
+      ? file.favorite && file.folder_id === currentFolderId
+      : file.favorite
+  );
+  //const filteredFolders = folders.filter((folder) => folder.parentId === selectedFolderId) && folder.favorite === true;
 
   const handleNewFolder = () => {
     const folderName = prompt("Enter folder name!");
@@ -98,11 +114,15 @@ const Favorite = (props) => {
           <FileList
             onDelete={handleDelete}
             fileList={files}
+            filteredFileList={filteredFavoriteFiles}
             folderList={folders}
+            filteredFolderList={filteredFavoriteFiles}
             selectedFolder={selectedFolder}
             selectedFile={selectedFile}
+            currentFolderName={currentFolderName}
             onFileSelect={handleFileSelect}
             onFolderSelect={handleFolderSelect}
+            onFolderDoubleClick={handleFolderDoubleClick}
             onNewFolder={handleNewFolder}
             onRename={handleRename}
           ></FileList>
