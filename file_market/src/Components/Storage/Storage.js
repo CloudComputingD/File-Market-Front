@@ -6,14 +6,9 @@ import styles from "../../assets/css/Storage/Storage.module.css";
 import FileList from "./FileList";
 import FileInfo from "./FileInfo";
 
-<<<<<<< HEAD
 const Storage = (props) => {
   const navigate = useNavigate();
   const [files, setFiles] = useState(props.fileList); // file lsit
-=======
-const Storage = ({ fileList, folderList }) => {
-  const [files, setFiles] = useState(fileList); // file list
->>>>>>> 0238382a930ac7458880f700cb0a842c1e7899e2
 
   const [selectedFile, setSelectedFile] = useState(null);
 

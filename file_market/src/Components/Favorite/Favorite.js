@@ -39,7 +39,7 @@ const Favorite = (props) => {
   };
 
   // 선택된 폴더의 하위 파일 & 폴더 필터링
-  const filteredFavoriteFiles = fileList.filter((file) =>
+  const filteredFavoriteFiles = props.fileList.filter((file) =>
     currentFolderId
       ? file.favorite && file.folder_id === currentFolderId
       : file.favorite
