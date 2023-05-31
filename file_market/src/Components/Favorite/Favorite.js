@@ -10,7 +10,9 @@ import ColorThemeChanger from "../ColorThemeChanger/Color_Theme_Changer";
 const Favorite = (props) => {
   const colorTheme = props.colorTheme;
   const navigate = useNavigate();
-  const favoriteFileList = props.fileList.filter((file) => file.favorite === true);
+  const favoriteFileList = props.fileList.filter(
+    (file) => file.favorite === true
+  );
 
   const [files, setFiles] = useState(favoriteFileList); // favorite file list
 
@@ -33,7 +35,7 @@ const Favorite = (props) => {
   };
 
   const [currentFolderId, setCurrentFolderId] = useState(false); // 더블클릭한 folder's id
-  const [currentFolderName, setCurrentFolderName] = useState("Root");
+  const [currentFolderName, setCurrentFolderName] = useState("My Favorite");
 
   const handleFolderDoubleClick = (folder) => {
     setCurrentFolderId(folder.id);
@@ -46,7 +48,11 @@ const Favorite = (props) => {
       ? file.favorite && file.folder_id === currentFolderId
       : file.favorite
   );
-  //const filteredFolders = folders.filter((folder) => folder.parentId === selectedFolderId) && folder.favorite === true;
+  const filteredFavoriteFolders = folders.filter((folder) =>
+    currentFolderId
+      ? folder.favorite && folder.id === currentFolderId
+      : folder.favorite
+  );
 
   const handleNewFolder = () => {
     const folderName = prompt("Enter folder name!");
@@ -109,7 +115,11 @@ const Favorite = (props) => {
 
   return (
     <div className={styles.storage_wrapper}>
-      <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
+      <Header
+        colorTheme={colorTheme}
+        navigate={navigate}
+        handleSearch={props.handleSearch}
+      />
       <div className={styles.storage_block_wrapper}>
         <Sidebar currentPage="favorite" />
         <div className={styles.storage_block}>
@@ -118,7 +128,7 @@ const Favorite = (props) => {
             fileList={files}
             filteredFileList={filteredFavoriteFiles}
             folderList={folders}
-            filteredFolderList={filteredFavoriteFiles}
+            filteredFolderList={filteredFavoriteFolders}
             selectedFolder={selectedFolder}
             selectedFile={selectedFile}
             currentFolderName={currentFolderName}
@@ -131,7 +141,10 @@ const Favorite = (props) => {
           <FileInfo file={selectedFile} folder={selectedFolder}></FileInfo>
         </div>
       </div>
-      <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>
+      <ColorThemeChanger
+        colorTheme={props.colorTheme}
+        handleChangeColorTheme={props.handleChangeColorTheme}
+      />
     </div>
   );
 };
