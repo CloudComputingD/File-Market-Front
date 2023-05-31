@@ -1,17 +1,17 @@
-.dashboard_wrapper {
+.search_wrapper {
     height: 100vh;
     display: flex;
     flex-direction: column;
 }
 
-.dashboard_block_wrapper {
+.search_block_wrapper {
     height: 100%;
     display: flex;
     flex-direction: row;
 }
 
-.dashboard_block {
+.search_block {
     width: 85%;
+    height: 100%;
     display: flex;
-    flex-direction: row;
 }

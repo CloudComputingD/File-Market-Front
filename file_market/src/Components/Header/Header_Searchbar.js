@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from '../../assets/css/Header/Header_Searchbar.module.css';
 
-const Searchbar = () => {
-    const [searchValue, setSearchValue] = useState('');
+const Searchbar = (props) => {
+    const [searchValue, setSearchValue] = useState(null);
 
     return(
         <div className={styles.searchbar_wrapper}>
@@ -19,7 +19,7 @@ const Searchbar = () => {
             <button
                 className={styles.search_button}
                 onClick={() => {
-                    alert(searchValue);
+                    props.handleSearchKey(searchValue);
                 }}>
                 Search
             </button>

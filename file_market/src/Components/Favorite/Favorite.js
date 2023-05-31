@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
 import styles from "../../assets/css/Storage/Storage.module.css";
 import FileList from "../Storage/FileList";
 import FileInfo from "../Storage/FileInfo";
 
-const Favorite = ({ fileList, folderList }) => {
-  const favoriteFileList = fileList.filter((file) => file.favorite === true);
+const Favorite = (props) => {
+  const navigate = useNavigate();
+  const favoriteFileList = props.fileList.filter((file) => file.favorite === true);
 
   const [files, setFiles] = useState(favoriteFileList);
 
@@ -16,7 +18,7 @@ const Favorite = ({ fileList, folderList }) => {
     setSelectedFile(file);
   };
 
-  const favoriteFolderList = folderList.filter(
+  const favoriteFolderList = props.folderList.filter(
     (folder) => folder.favorite === true
   );
 
@@ -89,7 +91,7 @@ const Favorite = ({ fileList, folderList }) => {
 
   return (
     <div className={styles.storage_wrapper}>
-      <Header></Header>
+      <Header navigate={navigate} handleSearch={props.handleSearch} />
       <div className={styles.storage_block_wrapper}>
         <Sidebar currentPage="favorite" />
         <div className={styles.storage_block}>

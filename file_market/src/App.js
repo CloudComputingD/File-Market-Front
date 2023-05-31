@@ -1,11 +1,13 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { STATESNAMING } from "./Configuration/StatesNaing";
 import Signin from "./Components/Sign/Signin";
 import Signup from "./Components/Sign/Signup";
 import Storage from "./Components/Storage/Storage";
 import Dashboard from "./Components/Dashboard/Dashboard";
 import Bin from "./Components/Bin/Bin";
 import Favorite from "./Components/Favorite/Favorite";
+import Search from "./Components/Search/Search";
 
 const dummyFileList = [
   {
@@ -176,33 +178,75 @@ const dummyFolderList = [
 ];
 
 function App() {
+  const [colorTheme, setColorTheme] = useState(STATESNAMING.COLORTHEME.LIGHTTHEME);
+  const [searchKey, setSearchKey] = useState(null);
+  const [searchedFiles, setSearchedFiles] = useState([]);
+
+  function handleChangeColorTheme() {
+    if (colorTheme === STATESNAMING.COLORTHEME.LIGHTTHEME) {
+      setColorTheme(STATESNAMING.COLORTHEME.DARKTHEME);
+    } else if (colorTheme === STATESNAMING.COLORTHEME.DARKTHEME) {
+      setColorTheme(STATESNAMING.COLORTHEME.LIGHTTHEME);
+    }
+  }
+
+  function handleSearch(key) {
+    setSearchKey(key);
+  }
+
+  useEffect(() => {
+    setSearchKey(null);
+  }, [])
+
+  useEffect(() => {
+    if (searchKey !== null) {
+      setSearchedFiles(dummyFileList);
+    }
+  }, [searchKey])
+  
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Signin />} />
-        <Route path="signup" element={<Signup />} />
+        <Route
+          path="/"
+          element={
+            <Signin colorTheme={colorTheme}
+          />}
+        />
+        <Route 
+          path="signup"
+          element={
+            <Signup colorTheme={colorTheme}
+          />}
+        />
         <Route
           path="dashboard"
           element={
-            <Dashboard fileList={dummyFileList} folderList={dummyFolderList} />
+            <Dashboard handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
           path="storage"
           element={
-            <Storage fileList={dummyFileList} folderList={dummyFolderList} />
+            <Storage handleSearch={handleSearch} colorTheme={colorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
           path="favorite"
           element={
-            <Favorite fileList={dummyFileList} folderList={dummyFolderList} />
+            <Favorite handleSearch={handleSearch} colorTheme={colorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
           path="bin"
           element={
-            <Bin fileList={dummyFileList} folderList={dummyFolderList} />
+            <Bin handleSearch={handleSearch} colorTheme={colorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+          }
+        />
+        <Route 
+          path="search"
+          element={
+            <Search handleSearch={handleSearch} colorTheme={colorTheme} searchedFiles={searchedFiles} searchedFolders={dummyFolderList}/>
           }
         />
       </Routes>

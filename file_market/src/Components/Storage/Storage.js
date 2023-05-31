@@ -1,12 +1,14 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
 import styles from "../../assets/css/Storage/Storage.module.css";
 import FileList from "./FileList";
 import FileInfo from "./FileInfo";
 
-const Storage = ({ fileList, folderList }) => {
-  const [files, setFiles] = useState(fileList); // file lsit
+const Storage = (props) => {
+  const navigate = useNavigate();
+  const [files, setFiles] = useState(props.fileList); // file lsit
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -14,7 +16,7 @@ const Storage = ({ fileList, folderList }) => {
     setSelectedFile(file);
   };
 
-  const [folders, setFolders] = useState(folderList); // folder list
+  const [folders, setFolders] = useState(props.folderList); // folder list
 
   const [selectedFolder, setSelectedFolder] = useState(null);
 
@@ -83,7 +85,7 @@ const Storage = ({ fileList, folderList }) => {
 
   return (
     <div className={styles.storage_wrapper}>
-      <Header></Header>
+      <Header navigate={navigate} handleSearch={props.handleSearch} />
       <div className={styles.storage_block_wrapper}>
         <Sidebar currentPage="storage" />
         <div className={styles.storage_block}>
