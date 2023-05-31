@@ -7,6 +7,7 @@ import newFolderIcon from "../../assets/image/addfoldericon.png";
 import binIcon from "../../assets/image/binicon.png";
 import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
+import { Link } from "react-router-dom";
 
 const Button = ({
   onRename,
@@ -14,6 +15,7 @@ const Button = ({
   onNewFolder,
   selectedFolder,
   selectedFile,
+  currentFolderName,
 }) => {
   const handleNewFolderClick = () => {
     if (onNewFolder) {
@@ -23,7 +25,7 @@ const Button = ({
 
   return (
     <div className={styles.btn_wrapper}>
-      <div className={styles.btn_title_wrapper}>FolderName</div>
+      <div className={styles.btn_title_wrapper}>{currentFolderName}</div>
       <div className={styles.btn}>
         <button
           className={styles.btn_upload}
@@ -100,7 +102,7 @@ const Button = ({
   );
 };
 
-const Files = ({ fileList, onFileSelect }) => {
+const Files = ({ filteredFileList, onFileSelect }) => {
   const [hoveredFile, setHoveredFile] = useState(null);
 
   const handleFileClick = (file) => {
@@ -119,7 +121,7 @@ const Files = ({ fileList, onFileSelect }) => {
     <div className={styles.files_wrapper}>
       <h2 className={styles.filelist_title_wrapper}>파일</h2>
       <div className={styles.files_body}>
-        {fileList.map((file) => (
+        {filteredFileList.map((file) => (
           <div
             className={styles.files_each}
             key={file.id}
@@ -145,7 +147,7 @@ const Files = ({ fileList, onFileSelect }) => {
   );
 };
 
-const Folders = ({ folderList, onFolderSelect }) => {
+const Folders = ({ folderList, onFolderSelect, onFolderDoubleClick }) => {
   const [hoveredFolder, setHoveredFolder] = useState(null);
 
   const handleFolderClick = (folder) => {
@@ -171,19 +173,26 @@ const Folders = ({ folderList, onFolderSelect }) => {
             onClick={() => handleFolderClick(folder)}
             onMouseEnter={() => handleFolderMouseEnter(folder)}
             onMouseLeave={handleFolderMouseLeave}
+            onDoubleClick={() => onFolderDoubleClick(folder)}
             style={{
               background:
                 hoveredFolder === folder ? "lightblue" : "transparent",
               fontWeight: hoveredFolder === folder ? "bold" : "normal",
             }}
           >
-            <img
-              className={styles.folderIcon}
-              src={folderIcon}
-              alt={folder.title}
-            />
-            <br></br>
-            {folder.title}
+            <Link
+              to={`/storage/` + folder.id}
+              style={{ textDecoration: "none", color: "black" }}
+              key={folder.id}
+            >
+              <img
+                className={styles.folderIcon}
+                src={folderIcon}
+                alt={folder.title}
+              />
+              <br></br>
+              {folder.title}
+            </Link>
           </div>
         ))}
       </div>
@@ -193,11 +202,15 @@ const Folders = ({ folderList, onFolderSelect }) => {
 
 const FileList = ({
   fileList,
+  filteredFileList,
   onFileSelect,
   folderList,
+  //filteredFolderList,
   onFolderSelect,
+  onFolderDoubleClick,
   selectedFolder,
   selectedFile,
+  currentFolderName,
   onDelete,
   onNewFolder,
   onRename,
@@ -210,12 +223,18 @@ const FileList = ({
         selectedFolder={selectedFolder}
         selectedFile={selectedFile}
         onRename={onRename}
+        currentFolderName={currentFolderName}
       ></Button>
       <Folders
         folderList={folderList}
         onFolderSelect={onFolderSelect}
+        onFolderDoubleClick={onFolderDoubleClick}
       ></Folders>
-      <Files fileList={fileList} onFileSelect={onFileSelect}></Files>
+      <Files
+        fileList={fileList}
+        filteredFileList={filteredFileList}
+        onFileSelect={onFileSelect}
+      ></Files>
     </div>
   );
 };

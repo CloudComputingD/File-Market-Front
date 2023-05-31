@@ -59,6 +59,10 @@ const Information = ({ file, folder }) => {
           Size: {FormatBytes(file.size)}
           <br></br>
           Uploaded: {file.created_time}
+          <br></br>
+          Favorite: {file.favorite ? "O" : "X"}
+          <br></br>
+          Parent folder: {file.folder_id}
         </div>
       </div>
     );
@@ -80,6 +84,8 @@ const Information = ({ file, folder }) => {
           Size: {FormatBytes(folder.size)}
           <br></br>
           Uploaded: {folder.created_time}
+          <br></br>
+          Favorite: {folder.favorite ? "O" : "X"}
         </div>
       </div>
     );
