@@ -6,7 +6,7 @@ import FileList from "./FileList";
 import FileInfo from "./FileInfo";
 
 const Storage = ({ fileList, folderList }) => {
-  const [files, setFiles] = useState(fileList); // file lsit
+  const [files, setFiles] = useState(fileList); // file list
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -21,6 +21,20 @@ const Storage = ({ fileList, folderList }) => {
   const handleFolderSelect = (folder) => {
     setSelectedFolder(folder);
   };
+
+  const [currentFolderId, setCurrentFolderId] = useState(null); // 더블클릭한 folder's id
+  const [currentFolderName, setCurrentFolderName] = useState("Root");
+
+  const handleFolderDoubleClick = (folder) => {
+    setCurrentFolderId(folder.id);
+    setCurrentFolderName(folder.title);
+  };
+
+  // 선택된 폴더의 하위 파일 & 폴더 필터링
+  const filteredFiles = files.filter(
+    (file) => file.folder_id === currentFolderId
+  );
+  //const filteredFolders = folders.filter((folder) => folder.parentId === selectedFolderId);
 
   const handleNewFolder = () => {
     const folderName = prompt("Enter folder name!");
@@ -90,11 +104,15 @@ const Storage = ({ fileList, folderList }) => {
           <FileList
             onDelete={handleDelete}
             fileList={files}
+            filteredFileList={filteredFiles}
             folderList={folders}
+            //filteredFolderList={filteredFolders}
             selectedFolder={selectedFolder}
             selectedFile={selectedFile}
+            currentFolderName={currentFolderName}
             onFileSelect={handleFileSelect}
             onFolderSelect={handleFolderSelect}
+            onFolderDoubleClick={handleFolderDoubleClick}
             onNewFolder={handleNewFolder}
             onRename={handleRename}
           ></FileList>
