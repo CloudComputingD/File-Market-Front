@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import UserProfileImg from "../../assets/image/userprofileimage.png";
 import styles from "../../assets/css/Header/Header_Userprofile.module.css";
 
-const UserProfile = () => {
+const UserProfile = (props) => {
+  const colorTheme = props.colorTheme;
   const [isModalOpen, setModalOpen] = useState(false);
 
   const handleProfileClick = () => {
@@ -22,10 +23,10 @@ const UserProfile = () => {
 
   return (
     <div className={styles.userprofile_wrapper}>
-      <div className={styles.userprofile_circular_image_border}>
+      <div className={`${styles.userprofile_circular_image_border} ${colorTheme === 'light' ? null : styles.darkmode_image_border}`}>
         <img
           src={UserProfileImg}
-          className={styles.userprofile_image}
+          className={`${styles.userprofile_image} ${colorTheme === 'light' ? null : styles.darkmode_userprofile_image}`}
           onClick={handleProfileClick}
         />
 

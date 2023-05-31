@@ -8,6 +8,7 @@ import FileInfo from "../Storage/FileInfo";
 import ColorThemeChanger from "../ColorThemeChanger/Color_Theme_Changer";
 
 const Favorite = (props) => {
+  const colorTheme = props.colorTheme;
   const navigate = useNavigate();
   const favoriteFileList = props.fileList.filter((file) => file.favorite === true);
 
@@ -108,7 +109,7 @@ const Favorite = (props) => {
 
   return (
     <div className={styles.storage_wrapper}>
-      <Header navigate={navigate} handleSearch={props.handleSearch} />
+      <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
       <div className={styles.storage_block_wrapper}>
         <Sidebar currentPage="favorite" />
         <div className={styles.storage_block}>

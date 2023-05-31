@@ -4,6 +4,7 @@ import Searchbar from './Header_Searchbar';
 import styles from '../../assets/css/Header/Header.module.css';
 
 const Header = (props) => {
+    const colorTheme = props.colorTheme;
 
     function handleSearchKey(key) {
         if (key !== null && key !== '') {
@@ -17,9 +18,9 @@ const Header = (props) => {
             <div className={styles.logo_wrapper}>
 
             </div>
-            <div className={styles.header}>
-                <Searchbar handleSearchKey={handleSearchKey}/>
-                <UserProfile />
+            <div className={`${styles.header} ${colorTheme === 'light' ? null : styles.darkmode_header_bgcolor}`}>
+                <Searchbar colorTheme={colorTheme} handleSearchKey={handleSearchKey}/>
+                <UserProfile colorTheme={colorTheme} />
             </div>
         </div>
         

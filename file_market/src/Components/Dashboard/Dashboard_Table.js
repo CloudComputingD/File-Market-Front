@@ -1,35 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import styles from '../../assets/css/Dashboard/Dashboard_Table.module.css';
 import { FormatBytes } from '../../logics/FormatBytes';
+import { CDropdown, CDropdownItem, CDropdownToggle, CDropdownMenu } from '@coreui/react'
+import '@coreui/coreui/dist/css/coreui.min.css'
 
 const OrderedTable = (props) => {
+    const menu = [
+        { title: 'Size', value: 'size'},
+        { title: 'Deleted Date', value: 'date'}
+    ];
+    const [dropped, setDropped] = useState(false);
+
+    function handleDrop() {
+        setDropped(!dropped);
+    }
+
     const sizeButtonStyle = (props.curMode === 'size' ? styles.table_cur_mode_button : styles.table_mode_button);
     const dateButtonStyle = (props.curMode === 'date' ? styles.table_cur_mode_button : styles.table_mode_button);
     const orderedFileList = props.orderedFileList;
 
     return(
         <div className={styles.table_wrapper}>
-            <div className={styles.table_mode_button_wrapper}>
-                <button
-                    className={sizeButtonStyle}
-                    onClick={() => {
-                        if (props.handleCurMode('size')){
-                            props.sortFileList('size');
-                        }
-                        }}>
-                    Size
-                </button>
-                <div style={{ width: 10 }} />
-                <button
-                    className={dateButtonStyle}
-                    onClick={() => {
-                        if (props.handleCurMode('date')) {
-                            props.sortFileList('date');
-                        }
-                    }}>
-                    Date
-                </button>
+            <div className={styles.table_title_wrapper}>
+                <CDropdown>
+                    <CDropdownToggle color='secondary'>
+                        {props.curMode === 'size' ? "Size" : "Deleted Date"}
+                    </CDropdownToggle>
+                    <CDropdownMenu>
+                        <CDropdownItem onClick={() => props.handleCurMode('size')}>Size</CDropdownItem>
+                        <CDropdownItem onClick={() => props.handleCurMode('date')}>Deleted Date</CDropdownItem>
+                    </CDropdownMenu>
+                </CDropdown>
+                <div className={styles.table_mode_button_wrapper}>
+                    <button
+                        className={styles.table_delete_button}>
+                        delete
+                    </button>
+                </div>
+                <div>
+                    paging area
+                </div>
             </div>
+
             <div className={styles.table_header_wrapper}>
                 <div className={styles.table_header_block}>
                     <div className={styles.header_column_wrapper}>
@@ -49,33 +61,35 @@ const OrderedTable = (props) => {
                     if (index < 10) {
                         return (
                             <div className={styles.table_item_wrapper}>
-                                <div className={styles.item_column_wrapper}>
+                                <div className={`${styles.item_column_wrapper} ${props.colorTheme === 'light' ? null : styles.darkmode_font_color}`}>
                                     {index + 1}
                                 </div>
-                                <div className={styles.item_column_wrapper}>
+                                <div className={`${styles.item_column_wrapper} ${props.colorTheme === 'light' ? null : styles.darkmode_font_color}`}>
                                     {file.title}
                                 </div>
-                                <div className={styles.item_column_wrapper}>
+                                <div className={`${styles.item_column_wrapper} ${props.colorTheme === 'light' ? null : styles.darkmode_font_color}`}>
                                     {props.curMode === 'size' ? FormatBytes(file.size) : file.created_time}
                                 </div>
                             </div>
                         )
                     }
                 })}
-                { orderedFileList.length >= 10 ? 
-                    <div className={styles.more_button_wrapper}>
-                        <button
-                            className={styles.more_button}>
-                            more button
-                        </button>
-                    </div>: null
-                }
             </div>
+        
+            {/* { orderedFileList.length >= 10 ? 
+                <div className={styles.more_button_wrapper}>
+                    <button
+                        className={styles.more_button}>
+                        more button
+                    </button>
+                </div>: null
+            } */}
         </div>
     )
 }
 
 const FileTable = (props) => {
+    const colorTheme = props.colorTheme;
     const fileList = props.fileList;
     const [curMode, setCurMode] = useState('size');
     const [orderedFileList, setOrderedFileList] = useState(fileList);
@@ -115,7 +129,7 @@ const FileTable = (props) => {
 
     return(
         <div className={styles.file_table_wrapper}>
-            <OrderedTable sortFileList={sortFileList} curMode={curMode} handleCurMode={handleCurMode} orderedFileList={orderedFileList}/>
+            <OrderedTable colorTheme={colorTheme} sortFileList={sortFileList} curMode={curMode} handleCurMode={handleCurMode} orderedFileList={orderedFileList}/>
         </div>
     )
 }

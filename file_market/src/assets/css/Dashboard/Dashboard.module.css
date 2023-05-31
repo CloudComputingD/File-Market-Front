@@ -4,6 +4,10 @@
     flex-direction: column;
 }
 
+.darkmode_bgcolor {
+    background-color: #081827;
+}
+
 .dashboard_block_wrapper {
     height: 100%;
     display: flex;

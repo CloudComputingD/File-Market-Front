@@ -8,12 +8,13 @@ import styles from '../../assets/css/Bin/Bin.module.css';
 import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 
 const Bin = (props) => {
+    const colorTheme = props.colorTheme;
     const navigate = useNavigate();
     const fileList = props.fileList;
     const folderList = props.folderList;
     return(
         <div className={styles.bin_wrapper}>
-            <Header navigate={navigate} handleSearch={props.handleSearch} />
+            <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
             <div className={styles.bin_block_wrapper}>
                 <Sidebar currentPage="bin"/>
                 <div className={styles.bin_block}>

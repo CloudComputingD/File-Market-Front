@@ -1,14 +1,16 @@
+@font-face {
+    font-family: "Lato Bold";
+    src: url('../../fonts/Lato-Bold.ttf');
+}
+
 .sidebar_wrapper {
     width: 15%;
     display: flex;
     align-items: flex-start;
+    background-color: #242541;
     border-right-width: 2px;
     border-right-color: #acacac;
     border-right-style: solid;
-}
-
-.darkmode_bgcolor {
-    background-color: cadetblue;
 }
 
 .sidebar_menu_block {
@@ -18,10 +20,7 @@
 
 .sidebar_menu_button_wrapper {
     width: 100%;
-    height: 40px;
-    border-bottom-width: 1px;
-    border-bottom-color: #acacac;
-    border-bottom-style: solid;
+    height: 60px;
 }
 
 .sidebar_curpage_menu_button {
@@ -30,7 +29,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: #acacac;
+    background-color: #27979B;
     border-width: 0px
 }
 
@@ -40,16 +39,9 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: white;
+    background-color: transparent;
+    color: white;
     border-width: 0px
-}
-
-.sidebar_menu_button_toggle_image_wrapper {
-    margin-right: 5px;
-    margin-left: 15px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .sidebar_menu_button_image_wrapper {
@@ -60,17 +52,19 @@
     align-items: center;
 }
 
-.sidebar_menu_button_toggle_image {
-    width: 15px;
+.sidebar_menu_button_image {
+    width: 40px;
+    filter: invert(100%);
 }
 
-.sidebar_menu_button_image {
-    width: 30px;
+.sidebar_cur_menu_button_image {
+    filter: invert(0%);
 }
 
 .sidebar_menu_title_wrapper {
     display: flex;
-    font-size: 20px;
+    font-family: "Lato Bold";
+    font-size: 25px;
     font-weight: bold;
     font-family: 'Lato';
     justify-content: center;

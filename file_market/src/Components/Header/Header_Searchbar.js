@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styles from '../../assets/css/Header/Header_Searchbar.module.css';
 
 const Searchbar = (props) => {
+    const colorTheme = props.colorTheme;
     const [searchValue, setSearchValue] = useState(null);
 
     return(
@@ -9,7 +10,7 @@ const Searchbar = (props) => {
             <input
                 type="search"
                 placeholder='Search'
-                className={styles.search_input}
+                className={`${styles.search_input} ${colorTheme === 'light' ? null : styles.darkmode_input_bgcolor}`}
                 value={searchValue}
                 onChange={(event) => {
                     setSearchValue(event.target.value);
@@ -17,7 +18,7 @@ const Searchbar = (props) => {
                 >
             </input>
             <button
-                className={styles.search_button}
+                className={`${styles.search_button} ${colorTheme === 'light' ? null : styles.darkmode_button}`}
                 onClick={() => {
                     props.handleSearchKey(searchValue);
                 }}>

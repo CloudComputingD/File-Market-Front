@@ -2,8 +2,6 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import DashboardIcon from "../../assets/image/dashboardicon.png";
 import StorageIcon from "../../assets/image/storageicon.png";
-import UntoggledIcon from "../../assets/image/untoggledicon.png";
-import ToggledIcon from "../../assets/image/toggledicon.png";
 import FavoriteIcon from "../../assets/image/blackstaricon.png";
 import BinIcon from "../../assets/image/binicon.png";
 import styles from "../../assets/css/Sidebar/Sidebar.module.css";
@@ -27,7 +25,7 @@ const DashboardMenu = (props) => {
         <div className={styles.sidebar_menu_button_image_wrapper}>
           <img
             src={DashboardIcon}
-            className={styles.sidebar_menu_button_image}
+            className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'dashboard' ? styles.sidebar_cur_menu_button_image : null}`}
           />
         </div>
         <div className={styles.sidebar_menu_title_wrapper}>Dashboard</div>
@@ -51,7 +49,7 @@ const StorageMenu = (props) => {
         }}
       >
         <div className={styles.sidebar_menu_button_image_wrapper}>
-          <img src={StorageIcon} className={styles.sidebar_menu_button_image} />
+          <img src={StorageIcon} className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'storage' ? styles.sidebar_cur_menu_button_image : null}`} />
         </div>
         <div className={styles.sidebar_menu_title_wrapper}>Storage</div>
       </button>
@@ -76,7 +74,7 @@ const FavoriteMenu = (props) => {
         <div className={styles.sidebar_menu_button_image_wrapper}>
           <img
             src={FavoriteIcon}
-            className={styles.sidebar_menu_button_image}
+            className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'favorite' ? styles.sidebar_cur_menu_button_image : null}`}
           />
         </div>
         <div className={styles.sidebar_menu_title_wrapper}>Favorite</div>
@@ -102,7 +100,7 @@ const BinMenu = (props) => {
         }}
       >
         <div className={styles.sidebar_menu_button_image_wrapper}>
-          <img src={BinIcon} className={styles.sidebar_menu_button_image} />
+          <img src={BinIcon} className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'bin' ? styles.sidebar_cur_menu_button_image : null}`} />
         </div>
         <div className={styles.sidebar_menu_title_wrapper}>Bin</div>
       </button>
@@ -112,15 +110,16 @@ const BinMenu = (props) => {
 
 const Sidebar = (props) => {
   const navigate = useNavigate();
+  const colorTheme = props.colorTheme;
   const currentPage = props.currentPage;
 
   return (
     <div className={styles.sidebar_wrapper}>
       <div className={styles.sidebar_menu_block}>
-        <DashboardMenu navigate={navigate} currentPage={currentPage} />
-        <StorageMenu navigate={navigate} currentPage={currentPage} />
-        <FavoriteMenu navigate={navigate} currentPage={currentPage} />
-        <BinMenu navigate={navigate} currentPage={currentPage} />
+        <DashboardMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
+        <StorageMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
+        <FavoriteMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
+        <BinMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
       </div>
     </div>
   );

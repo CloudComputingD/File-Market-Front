@@ -22,13 +22,13 @@ const Dashboard = (props) => {
     });
 
     return(
-        <div className={styles.dashboard_wrapper}>
-            <Header navigate={navigate} handleSearch={props.handleSearch} />
+        <div className={`${styles.dashboard_wrapper} ${colorTheme === 'light' ? null : styles.darkmode_bgcolor}`}>
+            <Header colorTheme={props.colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
             <div className={styles.dashboard_block_wrapper}>
-                <Sidebar currentPage="dashboard"/>
+                <Sidebar colorTheme={props.colorTheme} currentPage="dashboard"/>
                 <div className={styles.dashboard_block}>
-                    <Chart fileList={fileList} />
-                    <FileTable fileList={fileList} />
+                    <Chart colorTheme={colorTheme} fileList={fileList} />
+                    <FileTable colorTheme={colorTheme} fileList={fileList} />
                 </div>
             </div>
             <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>

@@ -8,6 +8,7 @@ import FileInfo from "./FileInfo";
 import ColorThemeChanger from "../ColorThemeChanger/Color_Theme_Changer";
 
 const Storage = (props) => {
+  const colorTheme = props.colorTheme;
   const navigate = useNavigate();
   const [files, setFiles] = useState(props.fileList); // file lsit
 
@@ -100,7 +101,7 @@ const Storage = (props) => {
 
   return (
     <div className={styles.storage_wrapper}>
-      <Header navigate={navigate} handleSearch={props.handleSearch} />
+      <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
       <div className={styles.storage_block_wrapper}>
         <Sidebar currentPage="storage" />
         <div className={styles.storage_block}>
