@@ -205,6 +205,9 @@ function App() {
   const [colorTheme, setColorTheme] = useState(STATESNAMING.COLORTHEME.LIGHTTHEME);
   const [searchKey, setSearchKey] = useState(null);
   const [searchedFiles, setSearchedFiles] = useState([]);
+  const [searchedFolders, setSearchedFolders] = useState([]);
+  const [deletedFiles, setDeletedFiles] = useState([]);
+  const [deletedFolders, setDeletedFolders] = useState([]);
 
   function handleChangeColorTheme() {
     if (colorTheme === STATESNAMING.COLORTHEME.LIGHTTHEME) {
@@ -220,11 +223,32 @@ function App() {
 
   useEffect(() => {
     setSearchKey(null);
+    const arr1 = [];
+    const arr2 = [];
+    dummyFileList.forEach((file) => {
+      if (file.deleted_time !== null) {
+        arr1.push(file);
+      }
+    })
+
   }, [])
 
   useEffect(() => {
     if (searchKey !== null) {
-      setSearchedFiles(dummyFileList);
+      const arr1 = [];
+      dummyFileList.forEach((file) => {
+        if (file.title.includes(searchKey)) {
+          arr1.push(file);
+        }
+      })
+      setSearchedFiles(arr1);
+      const arr2 = [];
+      dummyFolderList.forEach((folder) => {
+        if (folder.title.includes(searchKey)) {
+          arr2.push(folder);
+        }
+      })
+      setSearchedFolders(arr2);
     }
   }, [searchKey])
   
@@ -276,7 +300,7 @@ function App() {
         <Route 
           path="search"
           element={
-            <Search handleSearch={handleSearch} colorTheme={colorTheme} searchedFiles={searchedFiles} searchedFolders={dummyFolderList}/>
+            <Search handleSearch={handleSearch} colorTheme={colorTheme} searchedFiles={searchedFiles} searchedFolders={searchedFolders}/>
           }
         />
       </Routes>

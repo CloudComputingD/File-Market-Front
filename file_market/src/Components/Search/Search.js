@@ -17,6 +17,7 @@ const Search = (props) => {
                 <div className={styles.search_block}>
                 <FileList
                     fileList={fileList}
+                    filteredFileList={fileList}
                     folderList={props.searchedFolders}
                     // onDelete={handleDelete}
                     // selectedFolder={selectedFolder}

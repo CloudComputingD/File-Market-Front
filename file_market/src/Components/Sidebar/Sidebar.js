@@ -41,7 +41,6 @@ const StorageMenu = (props) => {
     props.currentPage === "storage"
       ? styles.sidebar_curpage_menu_button
       : styles.sidebar_normal_menu_button;
-  const toggle = props.currentPage === "storage" ? ToggledIcon : UntoggledIcon;
   
   return (
     <div className={styles.sidebar_menu_button_wrapper}>
@@ -51,12 +50,6 @@ const StorageMenu = (props) => {
           props.navigate("/storage");
         }}
       >
-        <div className={styles.sidebar_menu_button_toggle_image_wrapper}>
-          <img
-            src={toggle}
-            className={styles.sidebar_menu_button_toggle_image}
-          />
-        </div>
         <div className={styles.sidebar_menu_button_image_wrapper}>
           <img src={StorageIcon} className={styles.sidebar_menu_button_image} />
         </div>

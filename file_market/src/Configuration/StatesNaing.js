@@ -5,4 +5,3 @@ export const STATESNAMING = {
         "LIGHTTHEME": "light", 
     }
 }
-

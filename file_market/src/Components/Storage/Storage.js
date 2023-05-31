@@ -117,7 +117,7 @@ const Storage = (props) => {
             onFolderDoubleClick={handleFolderDoubleClick}
             onNewFolder={handleNewFolder}
             onRename={handleRename}
-          ></FileList>
+          />
           <FileInfo file={selectedFile} folder={selectedFolder}></FileInfo>
         </div>
       </div>
