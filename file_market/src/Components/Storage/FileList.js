@@ -102,6 +102,64 @@ const Button = ({
   );
 };
 
+const Folders = ({
+  folderList,
+  filteredFolderList,
+  onFolderSelect,
+  onFolderDoubleClick,
+}) => {
+  const [hoveredFolder, setHoveredFolder] = useState(null);
+
+  const handleFolderClick = (folder) => {
+    onFolderSelect(folder);
+  };
+
+  const handleFolderMouseEnter = (folder) => {
+    setHoveredFolder(folder);
+  };
+
+  const handleFolderMouseLeave = () => {
+    setHoveredFolder(null);
+  };
+
+  return (
+    <div className={styles.files_wrapper}>
+      <h2 className={styles.filelist_title_wrapper}>폴더</h2>
+      <div className={styles.files_body}>
+        {filteredFolderList.map((folder) => (
+          <div
+            className={styles.files_each}
+            key={folder.id}
+            onClick={() => handleFolderClick(folder)}
+            onMouseEnter={() => handleFolderMouseEnter(folder)}
+            onMouseLeave={handleFolderMouseLeave}
+            onDoubleClick={() => onFolderDoubleClick(folder)}
+            style={{
+              background:
+                hoveredFolder === folder ? "lightblue" : "transparent",
+              fontWeight: hoveredFolder === folder ? "bold" : "normal",
+            }}
+          >
+            <Link
+              to={`/storage/` + folder.id}
+              style={{ textDecoration: "none", color: "black" }}
+              key={folder.id}
+            >
+              <img
+                className={styles.folderIcon}
+                src={folderIcon}
+                alt={folder.title}
+              />
+              <br></br>
+              {folder.title}
+            </Link>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
 const Files = ({ filteredFileList, onFileSelect }) => {
   const [hoveredFile, setHoveredFile] = useState(null);
 
@@ -147,65 +205,12 @@ const Files = ({ filteredFileList, onFileSelect }) => {
   );
 };
 
-const Folders = ({ folderList, onFolderSelect, onFolderDoubleClick }) => {
-  const [hoveredFolder, setHoveredFolder] = useState(null);
-
-  const handleFolderClick = (folder) => {
-    onFolderSelect(folder);
-  };
-
-  const handleFolderMouseEnter = (folder) => {
-    setHoveredFolder(folder);
-  };
-
-  const handleFolderMouseLeave = () => {
-    setHoveredFolder(null);
-  };
-
-  return (
-    <div className={styles.files_wrapper}>
-      <h2 className={styles.filelist_title_wrapper}>폴더</h2>
-      <div className={styles.files_body}>
-        {folderList.map((folder) => (
-          <div
-            className={styles.files_each}
-            key={folder.id}
-            onClick={() => handleFolderClick(folder)}
-            onMouseEnter={() => handleFolderMouseEnter(folder)}
-            onMouseLeave={handleFolderMouseLeave}
-            onDoubleClick={() => onFolderDoubleClick(folder)}
-            style={{
-              background:
-                hoveredFolder === folder ? "lightblue" : "transparent",
-              fontWeight: hoveredFolder === folder ? "bold" : "normal",
-            }}
-          >
-            <Link
-              to={`/storage/` + folder.id}
-              style={{ textDecoration: "none", color: "black" }}
-              key={folder.id}
-            >
-              <img
-                className={styles.folderIcon}
-                src={folderIcon}
-                alt={folder.title}
-              />
-              <br></br>
-              {folder.title}
-            </Link>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-};
-
 const FileList = ({
   fileList,
   filteredFileList,
   onFileSelect,
   folderList,
-  //filteredFolderList,
+  filteredFolderList,
   onFolderSelect,
   onFolderDoubleClick,
   selectedFolder,
@@ -227,6 +232,7 @@ const FileList = ({
       ></Button>
       <Folders
         folderList={folderList}
+        filteredFolderList={filteredFolderList}
         onFolderSelect={onFolderSelect}
         onFolderDoubleClick={onFolderDoubleClick}
       ></Folders>

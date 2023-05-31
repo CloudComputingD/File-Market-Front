@@ -10,7 +10,7 @@ import ColorThemeChanger from "../ColorThemeChanger/Color_Theme_Changer";
 const Storage = (props) => {
   const colorTheme = props.colorTheme;
   const navigate = useNavigate();
-  const [files, setFiles] = useState(props.fileList); // file lsit
+  const [files, setFiles] = useState(props.fileList); // file list
 
   const [selectedFile, setSelectedFile] = useState(null);
 
@@ -27,7 +27,7 @@ const Storage = (props) => {
   };
 
   const [currentFolderId, setCurrentFolderId] = useState(null); // 더블클릭한 folder's id
-  const [currentFolderName, setCurrentFolderName] = useState("Root");
+  const [currentFolderName, setCurrentFolderName] = useState("My Storage");
 
   const handleFolderDoubleClick = (folder) => {
     setCurrentFolderId(folder.id);
@@ -38,7 +38,9 @@ const Storage = (props) => {
   const filteredFiles = files.filter(
     (file) => file.folder_id === currentFolderId
   );
-  //const filteredFolders = folders.filter((folder) => folder.parentId === selectedFolderId);
+  const filteredFolders = folders.filter((folder) =>
+    currentFolderId ? folder.id === currentFolderId : folder
+  );
 
   const handleNewFolder = () => {
     const folderName = prompt("Enter folder name!");
@@ -101,7 +103,11 @@ const Storage = (props) => {
 
   return (
     <div className={styles.storage_wrapper}>
-      <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
+      <Header
+        colorTheme={colorTheme}
+        navigate={navigate}
+        handleSearch={props.handleSearch}
+      />
       <div className={styles.storage_block_wrapper}>
         <Sidebar currentPage="storage" />
         <div className={styles.storage_block}>
@@ -110,7 +116,7 @@ const Storage = (props) => {
             fileList={files}
             filteredFileList={filteredFiles}
             folderList={folders}
-            //filteredFolderList={filteredFolders}
+            filteredFolderList={filteredFolders}
             selectedFolder={selectedFolder}
             selectedFile={selectedFile}
             currentFolderName={currentFolderName}
@@ -123,7 +129,10 @@ const Storage = (props) => {
           <FileInfo file={selectedFile} folder={selectedFolder}></FileInfo>
         </div>
       </div>
-      <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>
+      <ColorThemeChanger
+        colorTheme={colorTheme}
+        handleChangeColorTheme={props.handleChangeColorTheme}
+      />
     </div>
   );
 };
