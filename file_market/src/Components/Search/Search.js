@@ -5,6 +5,7 @@ import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import FileList from '../Storage/FileList';
 import FileInfo from '../Storage/FileInfo';
+import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 
 const Search = (props) => {
     const navigate = useNavigate(); 
@@ -30,6 +31,7 @@ const Search = (props) => {
                     <FileInfo />
                 </div>
             </div>
+            <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>
         </div>
     )
 }

@@ -209,19 +209,7 @@ function App() {
   const [deletedFiles, setDeletedFiles] = useState([]);
   const [deletedFolders, setDeletedFolders] = useState([]);
 
-  function handleChangeColorTheme() {
-    if (colorTheme === STATESNAMING.COLORTHEME.LIGHTTHEME) {
-      setColorTheme(STATESNAMING.COLORTHEME.DARKTHEME);
-    } else if (colorTheme === STATESNAMING.COLORTHEME.DARKTHEME) {
-      setColorTheme(STATESNAMING.COLORTHEME.LIGHTTHEME);
-    }
-  }
-
-  function handleSearch(key) {
-    setSearchKey(key);
-  }
-
-  useEffect(() => {
+  function getDeletedList() {
     setSearchKey(null);
     const arr1 = [];
     const arr2 = [];
@@ -230,7 +218,30 @@ function App() {
         arr1.push(file);
       }
     })
+    dummyFolderList.forEach((folder) => {
+      if (folder.deleted_time !== null) {
+        arr2.push(folder);
+      }
+    })
+    setDeletedFiles(arr1);
+    setDeletedFolders(arr2);
+  }
 
+  function handleChangeColorTheme() {
+    if (colorTheme === STATESNAMING.COLORTHEME.LIGHTTHEME) {
+      setColorTheme(STATESNAMING.COLORTHEME.DARKTHEME);
+    } else if (colorTheme === STATESNAMING.COLORTHEME.DARKTHEME) {
+      setColorTheme(STATESNAMING.COLORTHEME.LIGHTTHEME);
+    }
+    console.log(colorTheme);
+  }
+
+  function handleSearch(key) {
+    setSearchKey(key);
+  }
+
+  useEffect(() => {
+    getDeletedList();
   }, [])
 
   useEffect(() => {
@@ -270,7 +281,7 @@ function App() {
         <Route
           path="storage/:folder_id"
           element={
-            <Storage fileList={dummyFileList} folderList={dummyFolderList} />
+            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
@@ -282,25 +293,25 @@ function App() {
         <Route
           path="storage"
           element={
-            <Storage handleSearch={handleSearch} colorTheme={colorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
           path="favorite"
           element={
-            <Favorite handleSearch={handleSearch} colorTheme={colorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Favorite handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
           path="bin"
           element={
-            <Bin handleSearch={handleSearch} colorTheme={colorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Bin handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route 
           path="search"
           element={
-            <Search handleSearch={handleSearch} colorTheme={colorTheme} searchedFiles={searchedFiles} searchedFolders={searchedFolders}/>
+            <Search handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} searchedFiles={searchedFiles} searchedFolders={searchedFolders}/>
           }
         />
       </Routes>

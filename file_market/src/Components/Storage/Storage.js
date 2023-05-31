@@ -5,6 +5,7 @@ import Header from "../Header/Header";
 import styles from "../../assets/css/Storage/Storage.module.css";
 import FileList from "./FileList";
 import FileInfo from "./FileInfo";
+import ColorThemeChanger from "../ColorThemeChanger/Color_Theme_Changer";
 
 const Storage = (props) => {
   const navigate = useNavigate();
@@ -121,6 +122,7 @@ const Storage = (props) => {
           <FileInfo file={selectedFile} folder={selectedFolder}></FileInfo>
         </div>
       </div>
+      <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>
     </div>
   );
 };

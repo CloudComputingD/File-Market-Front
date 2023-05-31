@@ -13,10 +13,16 @@ const Header = (props) => {
     }
 
     return(
-        <div className={styles.header}>
-            <Searchbar handleSearchKey={handleSearchKey}/>
-            <UserProfile />
+        <div className={styles.header_wrapper}>
+            <div className={styles.logo_wrapper}>
+
+            </div>
+            <div className={styles.header}>
+                <Searchbar handleSearchKey={handleSearchKey}/>
+                <UserProfile />
+            </div>
         </div>
+        
     )
 }
 

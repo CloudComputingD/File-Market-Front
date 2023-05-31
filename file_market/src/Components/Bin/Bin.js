@@ -5,6 +5,7 @@ import Sidebar from '../Sidebar/Sidebar';
 import FileList from '../Storage/FileList';
 import FileInfo from '../Storage/FileInfo';
 import styles from '../../assets/css/Bin/Bin.module.css';
+import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 
 const Bin = (props) => {
     const navigate = useNavigate();
@@ -33,6 +34,7 @@ const Bin = (props) => {
                     />
                 </div>
             </div>
+            <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>
         </div>
     )
 }

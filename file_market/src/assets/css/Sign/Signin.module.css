@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Lato Bold";
+    src: url('../../fonts/Lato-Bold.ttf');
+}
+
+@font-face {
+    font-family: "Lato Regular";
+    src: url('../../fonts/Lato-Regular.ttf');
+}
+
 .signin {
     height: 100vh;
     display: flex;
@@ -27,6 +37,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'Lato Bold';
     font-size: 70px;
     font-weight: bold;
 }
@@ -47,6 +58,7 @@
     height: 40px;
     font-size: 20px;
     padding-left: 10px;
+    font-family: "Lato Regular";
 }
 
 .signin_button_wrapper {
@@ -60,4 +72,5 @@
     width: 130px;
     height: 50px;
     font-size: 18px;
+    font-family: "Lato Regular";
 }

@@ -5,6 +5,7 @@ import FileTable from './Dashboard_Table';
 import Header from '../Header/Header';
 import Sidebar from '../Sidebar/Sidebar';
 import styles from '../../assets/css/Dashboard/Dashboard.module.css';
+import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 
 const Dashboard = (props) => {
     const navigate = useNavigate();
@@ -30,6 +31,7 @@ const Dashboard = (props) => {
                     <FileTable fileList={fileList} />
                 </div>
             </div>
+            <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>
         </div>
     )
 }
