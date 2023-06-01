@@ -13,7 +13,7 @@ const Bin = (props) => {
     const fileList = props.fileList;
     const folderList = props.folderList;
     return(
-        <div className={styles.bin_wrapper}>
+        <div className={`${styles.bin_wrapper} ${colorTheme === 'light' ? null : styles.darkmode_bgcolor}`}>
             <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
             <div className={styles.bin_block_wrapper}>
                 <Sidebar currentPage="bin"/>
@@ -23,7 +23,7 @@ const Bin = (props) => {
                         folderList={folderList}
                         // onDelete={handleDelete}
                         filteredFileList={fileList}
-                        //filteredFolderList={filteredFolders}
+                        filteredFolderList={folderList}
                         // selectedFolder={selectedFolder}
                         // selectedFile={selectedFile}
                         // currentFolderName={currentFolderName}
@@ -33,6 +33,7 @@ const Bin = (props) => {
                         // onNewFolder={handleNewFolder}
                         // onRename={handleRename}
                     />
+                    
                 </div>
             </div>
             <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>

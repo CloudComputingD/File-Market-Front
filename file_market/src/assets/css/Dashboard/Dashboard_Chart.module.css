@@ -1,6 +1,16 @@
+@font-face {
+    font-family: "Lato Bold";
+    src: url('../../fonts/Lato-Bold.ttf');
+}
+
+@font-face {
+    font-family: "Lato Regular";
+    src: url('../../fonts/Lato-Regular.ttf');
+}
+
 .dashboard_chart_wrapper {
     margin: 20px;
-    width: 700px;
+    width: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -15,12 +25,14 @@
 .dashboard_chart_mode_button_wrapper {
     display: flex;
     flex-direction: row;
+    font-family: "Lato Bold";
+    font-size: 25px;
 }
 
 .dashboard_chart_mode_button {
     width: 80px;
     height: 40px;
-    background-color: #acacac;
+    background-color: #9DA5B1;
     border-width: 0px;
     margin-right: 5px;
 }
@@ -28,7 +40,7 @@
 .dashboard_chart_cur_mode_button {
     width: 80px;
     height: 40px;
-    background-color: #d7c0c0;
+    background-color: #9DA5B1;
     border-width: 0px;
     margin-right: 5px;
 }

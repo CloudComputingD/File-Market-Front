@@ -8,6 +8,7 @@ import Dashboard from "./Components/Dashboard/Dashboard";
 import Bin from "./Components/Bin/Bin";
 import Favorite from "./Components/Favorite/Favorite";
 import Search from "./Components/Search/Search";
+import { Categorize } from "./logics/Categorize";
 
 const dummyFileList = [
   {
@@ -208,6 +209,7 @@ function App() {
   const [searchedFolders, setSearchedFolders] = useState([]);
   const [deletedFiles, setDeletedFiles] = useState([]);
   const [deletedFolders, setDeletedFolders] = useState([]);
+  const [extensionCategory, setExtensionCategory] = useState({});
 
   function getDeletedList() {
     setSearchKey(null);
@@ -242,6 +244,8 @@ function App() {
 
   useEffect(() => {
     getDeletedList();
+    const cate = Categorize(dummyFileList);
+    setExtensionCategory(cate);
   }, [])
 
   useEffect(() => {
@@ -287,7 +291,7 @@ function App() {
         <Route
           path="dashboard"
           element={
-            <Dashboard handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Dashboard extensionCategory={extensionCategory} handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
           }
         />
         <Route
@@ -305,7 +309,7 @@ function App() {
         <Route
           path="bin"
           element={
-            <Bin handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Bin handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={deletedFiles} folderList={deletedFolders} />
           }
         />
         <Route 

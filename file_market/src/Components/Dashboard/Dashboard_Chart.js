@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import ReactApexChart from 'react-apexcharts';
 import styles from '../../assets/css/Dashboard/Dashboard_Chart.module.css';
-import { FormatBytes } from '../../logics/FormatBytes';
+import { CDropdown, CDropdownItem, CDropdownToggle, CDropdownMenu } from '@coreui/react'
+import '@coreui/coreui/dist/css/coreui.min.css'
+import { FormatBytes, FormatNumber } from '../../logics/Formatter';
 
 const ChartModeButton = (props) => {
     const total_button = props.chartMode === 'total' ? styles.dashboard_chart_cur_mode_button : styles.dashboard_chart_mode_button;
@@ -9,18 +11,15 @@ const ChartModeButton = (props) => {
 
     return(
         <div className={styles.dashboard_chart_mode_button_wrapper}>
-            <button className={total_button}
-                onClick={() => {
-                    props.handleModeChange('total');
-                }}>
-                Total
-            </button>
-            <button className={extension_button}
-                onClick={() => {
-                    props.handleModeChange('extension');
-                }}>
-                Extension
-            </button>
+            <CDropdown>
+                <CDropdownToggle color='secondary'>
+                    {props.chartMode === 'total' ? "Total" : "Extension"}
+                </CDropdownToggle>
+                <CDropdownMenu>
+                    <CDropdownItem onClick={() => props.handleModeChange('total')}>Total</CDropdownItem>
+                    <CDropdownItem onClick={() => props.handleModeChange('extension')}>Extension</CDropdownItem>
+                </CDropdownMenu>
+            </CDropdown>
         </div>
     )
 }
@@ -65,21 +64,25 @@ const Chart = (props) => {
                                 fontSize: '22px',
                                 show: true,
                                 color: 'blue',
+                                formatter: FormatBytes
                             },
                         },
                     }
                 }
             },
             labels: ["used", "free"],
-            title: {
-                text: 'Total',
-                align: 'center'
-            },
+            // title: {
+            //     text: 'Total',
+            //     align: 'center'
+            // },
         },
     });
 
+    const extensionLabel = ["code", "image", "video", "doc", "ect"];
+    const extensionSeries = [props.extensionCategory['code'], props.extensionCategory['image'], props.extensionCategory['video'], props.extensionCategory['doc'], props.extensionCategory['etc']];
+
     const [extensionData, setExtensionData] = useState({
-        series: [1, 2, 3],
+        series: extensionSeries,
         options: {
             chart: {
                 type: 'donut',
@@ -93,30 +96,27 @@ const Chart = (props) => {
             plotOptions: {
                 pie: {
                     donut: {
-                    // hollow: {  
-                    //   margin: 15,
-                    //   size: '70%',
-                    //   image: '../../css/images/a-icon.jpg',
-                    //   imageWidth: 64,
-                    //   imageHeight: 64,
-                    //   imageClipped: false
-                    // },
+                        hollow: {  
+                            margin: 15,
+                            size: '100%',
+                        },
                         labels: {
                             show: true,
                             value: {
                                 fontSize: '22px',
                                 show: true,
                                 color: 'blue',
+                                formatter: FormatNumber
                             },
                         },
                     }
                 }
             },
-            labels: ["temp1", "temp2", "temp3"],
-            title: {
-                text: 'Total',
-                align: 'center'
-            },
+            labels: extensionLabel,
+            // title: {
+            //     text: 'Extension',
+            //     align: 'center',
+            // },
         },
     });
 
@@ -142,7 +142,7 @@ const Chart = (props) => {
                     options={chartData.options}
                     series={chartData.series}
                     type="donut" 
-                    width="700"
+                    width="500"
                 />
             </div>
         </div>

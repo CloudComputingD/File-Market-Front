@@ -8,11 +8,12 @@ import FileInfo from '../Storage/FileInfo';
 import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 
 const Search = (props) => {
+    const colorTheme = props.colorTheme;
     const navigate = useNavigate(); 
     const fileList = props.searchedFiles;
     return(
-        <div className={styles.search_wrapper}>
-            <Header navigate={navigate} handleSearch={props.handleSearch} />
+        <div className={`${styles.search_wrapper} ${colorTheme === 'light' ? null : styles.darkmode_bgcolor}`}>
+            <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
             <div className={styles.search_block_wrapper}>
                 <Sidebar currentPage="search"/>
                 <div className={styles.search_block}>
@@ -20,6 +21,7 @@ const Search = (props) => {
                     fileList={fileList}
                     filteredFileList={fileList}
                     folderList={props.searchedFolders}
+                    filteredFolderList={props.searchedFolders}
                     // onDelete={handleDelete}
                     // selectedFolder={selectedFolder}
                     // selectedFile={selectedFile}

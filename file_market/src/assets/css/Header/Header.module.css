@@ -9,6 +9,7 @@
     width: 15%;
     height: 100%;
     background-color: #242541;
+    border-right: 2px #acacac solid;
 }
 
 .darkmode_header_bgcolor {
@@ -22,5 +23,4 @@
     flex-direction: row;
     justify-content: flex-end;
     border-bottom: 3px #acacac solid;
-    border-left: 2px #acacac solid;
 }

@@ -9,3 +9,8 @@ export function FormatBytes(intSize, decimals=2) {
 
     return parseFloat((intSize / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
+
+export function FormatNumber(intNumber) {
+    const number = intNumber.toString(10);
+    return number;
+}

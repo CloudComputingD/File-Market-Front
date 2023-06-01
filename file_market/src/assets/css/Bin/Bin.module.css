@@ -15,3 +15,7 @@
     height: 100%;
     display: flex;
 }
+
+.darkmode_bgcolor {
+    background-color: #081827;
+}

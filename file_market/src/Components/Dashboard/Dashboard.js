@@ -27,7 +27,7 @@ const Dashboard = (props) => {
             <div className={styles.dashboard_block_wrapper}>
                 <Sidebar colorTheme={props.colorTheme} currentPage="dashboard"/>
                 <div className={styles.dashboard_block}>
-                    <Chart colorTheme={colorTheme} fileList={fileList} />
+                    <Chart extensionCategory={props.extensionCategory} colorTheme={colorTheme} fileList={fileList} />
                     <FileTable colorTheme={colorTheme} fileList={fileList} />
                 </div>
             </div>

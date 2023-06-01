@@ -3,7 +3,7 @@ import favoriteIcon from "../../assets/image/blackstaricon.png";
 import infoIcon from "../../assets/image/infoicon.png";
 import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
-import { FormatBytes } from "../../logics/FormatBytes";
+import { FormatBytes } from "../../logics/Formatter";
 
 const FavoriteFile = ({ file, folder }) => {
   if (file) {
