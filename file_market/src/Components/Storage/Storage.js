@@ -9,6 +9,7 @@ import ColorThemeChanger from "../ColorThemeChanger/Color_Theme_Changer";
 
 const Storage = (props) => {
   const colorTheme = props.colorTheme;
+
   const navigate = useNavigate();
   const [files, setFiles] = useState(props.fileList); // file list
 
@@ -102,7 +103,11 @@ const Storage = (props) => {
   };
 
   return (
-    <div className={styles.storage_wrapper}>
+    <div
+      className={`${styles.storage_wrapper} ${
+        colorTheme === "light" ? null : styles.darkmode_storage_bgcolor
+      }`}
+    >
       <Header
         colorTheme={colorTheme}
         navigate={navigate}
@@ -125,8 +130,13 @@ const Storage = (props) => {
             onFolderDoubleClick={handleFolderDoubleClick}
             onNewFolder={handleNewFolder}
             onRename={handleRename}
+            colorTheme={colorTheme}
           />
-          <FileInfo file={selectedFile} folder={selectedFolder}></FileInfo>
+          <FileInfo
+            file={selectedFile}
+            folder={selectedFolder}
+            colorTheme={colorTheme}
+          ></FileInfo>
         </div>
       </div>
       <ColorThemeChanger
