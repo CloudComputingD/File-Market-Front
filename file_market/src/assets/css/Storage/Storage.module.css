@@ -14,3 +14,7 @@
     display: flex;
     width: 85%;
 }
+
+.darkmode_storage_bgcolor {
+    background: #081827;
+}

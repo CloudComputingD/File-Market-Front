@@ -23,22 +23,31 @@ const UserProfile = (props) => {
 
   return (
     <div className={styles.userprofile_wrapper}>
-      <div className={`${styles.userprofile_circular_image_border} ${colorTheme === 'light' ? null : styles.darkmode_image_border}`}>
+      <div
+        className={`${styles.userprofile_circular_image_border} ${
+          colorTheme === "light" ? null : styles.darkmode_image_border
+        }`}
+      >
         <img
           src={UserProfileImg}
-          className={`${styles.userprofile_image} ${colorTheme === 'light' ? null : styles.darkmode_userprofile_image}`}
+          className={`${styles.userprofile_image} ${
+            colorTheme === "light" ? null : styles.darkmode_userprofile_image
+          }`}
           onClick={handleProfileClick}
         />
 
         {isModalOpen && (
           <div className={styles.modal}>
             <div className={styles.modal_content}>
-              <h2>User Profile</h2>
+              <h3>User Profile</h3>
+              <br></br>
               <p>Name: {user.name}</p>
               <p>Email: {user.email}</p>
               <p>Role: {user.role}</p>
+              <div className={styles.modal_button_wrapper}>
+                <button onClick={handleCloseModal}>Close</button>
+              </div>
             </div>
-            <button onClick={handleCloseModal}>Close</button>
           </div>
         )}
       </div>

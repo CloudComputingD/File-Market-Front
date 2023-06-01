@@ -5,101 +5,199 @@ import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
 import { FormatBytes } from "../../logics/Formatter";
 
-const FavoriteFile = ({ file, folder }) => {
-  if (file) {
+const FavoriteFile = (props) => {
+  if (props.file) {
     return (
-      <div className={styles.favoritefile_wrapper}>
+      <div
+        className={`${styles.favoritefile_wrapper} ${
+          props.colorTheme === "light"
+            ? null
+            : styles.darkmode_favoritefile_wrapper
+        }`}
+      >
         <div className={styles.favoritefile_header}>
-          <div>
-            <img
-              className={styles.favorite_mark}
-              src={favoriteIcon}
-              width={25}
-              height={25}
-            ></img>
+          <img
+            className={`${styles.favorite_mark} ${
+              props.colorTheme === "light"
+                ? null
+                : styles.darkmode_information_icon
+            }`}
+            src={favoriteIcon}
+            width={25}
+            height={25}
+          ></img>
+          <div
+            className={`${
+              props.colorTheme === "light"
+                ? null
+                : styles.darkmode_information_text
+            }`}
+          >
+            &nbsp;{props.file.title}
           </div>
-          <div className="">&nbsp;{file.title}</div>
         </div>
       </div>
     );
   }
-  if (folder) {
+  if (props.folder) {
     return (
-      <div className={styles.favoritefile_wrapper}>
+      <div
+        className={`${styles.favoritefile_wrapper} ${
+          props.colorTheme === "light"
+            ? null
+            : styles.darkmode_favoritefile_wrapper
+        }`}
+      >
         <div className={styles.favoritefile_header}>
           <div>
             <img
-              className={styles.favorite_mark}
+              className={`${styles.favorite_mark} ${
+                props.colorTheme === "light"
+                  ? null
+                  : styles.darkmode_information_icon
+              }`}
               src={favoriteIcon}
               width={25}
               height={25}
             ></img>
           </div>
-          <div className="">&nbsp;{folder.title}</div>
+          <div
+            className={`${
+              props.colorTheme === "light"
+                ? null
+                : styles.darkmode_information_text
+            }`}
+          >
+            &nbsp;{props.folder.title}
+          </div>
         </div>
       </div>
     );
   }
 };
 
-const Information = ({ file, folder }) => {
-  if (file) {
+const Information = (props) => {
+  if (props.file) {
     return (
       <div className={styles.information_wrapper}>
-        <div className={styles.information_header}>
-          <img className="" src={infoIcon} width={20} height={20}></img>
+        <div
+          className={`${styles.information_header} ${
+            props.colorTheme === "light"
+              ? null
+              : styles.darkmode_information_text
+          }`}
+        >
+          <img
+            className={`${styles.information_icon} ${
+              props.colorTheme === "light"
+                ? null
+                : styles.darkmode_information_icon
+            }`}
+            src={infoIcon}
+            width={20}
+            height={20}
+          ></img>
           &nbsp;Information
         </div>
-        <img className={styles.information_img} src={fileIcon}></img>
-        <div className={styles.information_text}>
-          File name: {file.title}
+        <img
+          className={`${styles.information_img} ${
+            props.colorTheme === "light"
+              ? null
+              : styles.darkmode_information_icon
+          }`}
+          src={fileIcon}
+        ></img>
+        <div
+          className={`${styles.information_text} ${
+            props.colorTheme === "light"
+              ? null
+              : styles.darkmode_information_text
+          }`}
+        >
+          File name: {props.file.title}
           <br></br>
-          Author id: {file.user_id}
+          Author id: {props.file.user_id}
           <br></br>
-          Size: {FormatBytes(file.size)}
+          Size: {FormatBytes(props.file.size)}
           <br></br>
-          Uploaded: {file.created_time}
+          Uploaded: {props.file.created_time}
           <br></br>
-          Favorite: {file.favorite ? "O" : "X"}
+          Favorite: {props.file.favorite ? "O" : "X"}
           <br></br>
-          Parent folder: {file.folder_id}
+          Parent folder: {props.file.folder_id}
         </div>
       </div>
     );
   }
 
-  if (folder) {
+  if (props.folder) {
     return (
       <div className={styles.information_wrapper}>
-        <div className={styles.information_header}>
-          <img className="" src={infoIcon} width={20} height={20}></img>
+        <div
+          className={`${styles.information_header} ${
+            props.colorTheme === "light"
+              ? null
+              : styles.darkmode_information_text
+          }`}
+        >
+          <img
+            className={`${styles.information_icon} ${
+              props.colorTheme === "light"
+                ? null
+                : styles.darkmode_information_icon
+            }`}
+            src={infoIcon}
+            width={20}
+            height={20}
+          ></img>
           &nbsp;Information
         </div>
-        <img className={styles.information_img} src={folderIcon}></img>
-        <div className={styles.information_text}>
-          Folder name: {folder.title}
+        <img
+          className={`${styles.information_img} ${
+            props.colorTheme === "light"
+              ? null
+              : styles.darkmode_information_icon
+          }`}
+          src={folderIcon}
+        ></img>
+        <div
+          className={`${styles.information_text} ${
+            props.colorTheme === "light"
+              ? null
+              : styles.darkmode_information_text
+          }`}
+        >
+          Folder name: {props.folder.title}
           <br></br>
-          Author id: {folder.user_id}
+          Author id: {props.folder.user_id}
           <br></br>
-          Size: {FormatBytes(folder.size)}
+          Size: {FormatBytes(props.folder.size)}
           <br></br>
-          Uploaded: {folder.created_time}
+          Uploaded: {props.folder.created_time}
           <br></br>
-          Favorite: {folder.favorite ? "O" : "X"}
+          Favorite: {props.folder.favorite ? "O" : "X"}
         </div>
       </div>
     );
   }
 };
 
-const FileInfo = ({ file, folder }) => {
+const FileInfo = ({ file, folder, colorTheme }) => {
   if (!file && !folder) {
     return <div>No file or folder selected</div>;
   }
   return (
     <div className={styles.fileinfo_wrapper}>
-      <FavoriteFile file={file} folder={folder}></FavoriteFile>
-      <Information file={file} folder={folder}></Information>
+      <FavoriteFile
+        file={file}
+        folder={folder}
+        colorTheme={colorTheme}
+      ></FavoriteFile>
+      <Information
+        file={file}
+        folder={folder}
+        colorTheme={colorTheme}
+      ></Information>
     </div>
   );
 };

@@ -9,23 +9,24 @@ import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
 import { Link } from "react-router-dom";
 
-const Button = ({
-  onRename,
-  onDelete,
-  onNewFolder,
-  selectedFolder,
-  selectedFile,
-  currentFolderName,
-}) => {
+const Button = (props) => {
   const handleNewFolderClick = () => {
-    if (onNewFolder) {
-      onNewFolder();
+    if (props.onNewFolder) {
+      props.onNewFolder();
     }
   };
 
   return (
     <div className={styles.btn_wrapper}>
-      <div className={styles.btn_title_wrapper}>{currentFolderName}</div>
+      <div
+        className={`${styles.btn_title_wrapper} ${
+          props.colorTheme === "light"
+            ? null
+            : styles.darkmode_btn_title_wrapper
+        }`}
+      >
+        {props.currentFolderName}
+      </div>
       <div className={styles.btn}>
         <button
           className={styles.btn_upload}
@@ -72,7 +73,9 @@ const Button = ({
 
         <button
           className={styles.btn_else}
-          onClick={() => onRename(selectedFolder, selectedFile)}
+          onClick={() =>
+            props.onRename(props.selectedFolder, props.selectedFile)
+          }
         >
           <img
             className={styles.img_else}
@@ -86,7 +89,9 @@ const Button = ({
 
         <button
           className={styles.btn_else}
-          onClick={() => onDelete(selectedFolder, selectedFile)}
+          onClick={() =>
+            props.onDelete(props.selectedFolder, props.selectedFile)
+          }
         >
           <img
             className={styles.img_else}
@@ -107,6 +112,7 @@ const Folders = ({
   filteredFolderList,
   onFolderSelect,
   onFolderDoubleClick,
+  colorTheme,
 }) => {
   const [hoveredFolder, setHoveredFolder] = useState(null);
 
@@ -124,7 +130,13 @@ const Folders = ({
 
   return (
     <div className={styles.files_wrapper}>
-      <h2 className={styles.filelist_title_wrapper}>폴더</h2>
+      <h2
+        className={`${styles.filelist_title_wrapper} ${
+          colorTheme === "light" ? null : styles.darkmode_filelist_title_wrapper
+        }`}
+      >
+        폴더
+      </h2>
       <div className={styles.files_body}>
         {filteredFolderList.map((folder) => (
           <div
@@ -146,12 +158,21 @@ const Folders = ({
               key={folder.id}
             >
               <img
-                className={styles.folderIcon}
+                className={`${styles.folderIcon} ${
+                  colorTheme === "light" ? null : styles.darkmode_folderIcon
+                }`}
                 src={folderIcon}
                 alt={folder.title}
               />
               <br></br>
-              {folder.title}
+              <div className={styles.each_title}></div>
+              <text
+                className={`${styles.text} ${
+                  colorTheme === "light" ? null : styles.darkmode_text
+                }`}
+              >
+                {folder.title}
+              </text>
             </Link>
           </div>
         ))}
@@ -160,7 +181,7 @@ const Folders = ({
   );
 };
 
-const Files = ({ filteredFileList, onFileSelect }) => {
+const Files = ({ filteredFileList, onFileSelect, colorTheme }) => {
   const [hoveredFile, setHoveredFile] = useState(null);
 
   const handleFileClick = (file) => {
@@ -177,7 +198,13 @@ const Files = ({ filteredFileList, onFileSelect }) => {
 
   return (
     <div className={styles.files_wrapper}>
-      <h2 className={styles.filelist_title_wrapper}>파일</h2>
+      <h2
+        className={`${styles.filelist_title_wrapper} ${
+          colorTheme === "light" ? null : styles.darkmode_filelist_title_wrapper
+        }`}
+      >
+        파일
+      </h2>
       <div className={styles.files_body}>
         {filteredFileList.map((file) => (
           <div
@@ -192,12 +219,20 @@ const Files = ({ filteredFileList, onFileSelect }) => {
             }}
           >
             <img
-              className={styles.folderIcon}
+              className={`${styles.folderIcon} ${
+                colorTheme === "light" ? null : styles.darkmode_folderIcon
+              }`}
               src={fileIcon}
               alt={file.title}
             />
             <br></br>
-            {file.title}
+            <text
+              className={`${styles.text} ${
+                colorTheme === "light" ? null : styles.darkmode_text
+              }`}
+            >
+              {file.title}
+            </text>
           </div>
         ))}
       </div>
@@ -205,41 +240,30 @@ const Files = ({ filteredFileList, onFileSelect }) => {
   );
 };
 
-const FileList = ({
-  fileList,
-  filteredFileList,
-  onFileSelect,
-  folderList,
-  filteredFolderList,
-  onFolderSelect,
-  onFolderDoubleClick,
-  selectedFolder,
-  selectedFile,
-  currentFolderName,
-  onDelete,
-  onNewFolder,
-  onRename,
-}) => {
+const FileList = (props) => {
   return (
     <div className={styles.filelist_wrapper}>
       <Button
-        onNewFolder={onNewFolder}
-        onDelete={onDelete}
-        selectedFolder={selectedFolder}
-        selectedFile={selectedFile}
-        onRename={onRename}
-        currentFolderName={currentFolderName}
+        onNewFolder={props.onNewFolder}
+        onDelete={props.onDelete}
+        selectedFolder={props.selectedFolder}
+        selectedFile={props.selectedFile}
+        onRename={props.onRename}
+        currentFolderName={props.currentFolderName}
+        colorTheme={props.colorTheme}
       ></Button>
       <Folders
-        folderList={folderList}
-        filteredFolderList={filteredFolderList}
-        onFolderSelect={onFolderSelect}
-        onFolderDoubleClick={onFolderDoubleClick}
+        folderList={props.folderList}
+        filteredFolderList={props.filteredFolderList}
+        onFolderSelect={props.onFolderSelect}
+        onFolderDoubleClick={props.onFolderDoubleClick}
+        colorTheme={props.colorTheme}
       ></Folders>
       <Files
-        fileList={fileList}
-        filteredFileList={filteredFileList}
-        onFileSelect={onFileSelect}
+        fileList={props.fileList}
+        filteredFileList={props.filteredFileList}
+        onFileSelect={props.onFileSelect}
+        colorTheme={props.colorTheme}
       ></Files>
     </div>
   );

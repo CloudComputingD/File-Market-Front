@@ -23,6 +23,16 @@
     text-align: center;
 }
 
+.files_body::-webkit-scrollbar {
+    width: 10px;
+    height: 15px;
+}
+
+.files_body::-webkit-scrollbar-thumb {
+    background: #27979B;
+    border-radius: 10px;
+}
+
 .files_body > div {
     width: 20%;
 }
@@ -33,6 +43,10 @@
     align-items: center;
     border-radius: 20px;
     padding: 10px;
+}
+
+.darkmode_text {
+    color:white;
 }
 
 .btn_wrapper {
@@ -54,22 +68,33 @@
     color: #353535;
 }
 
+.darkmode_btn_title_wrapper {
+    color: white;
+}
+
 .btn_upload {
-    border-color: #acacac;
+    border-color: #242541;
     border-width: 2px;
     padding: 5px 10px;
     border-radius: 10px;
     text-decoration: none;
-    background-color: #acacac;
-    color: #353535;
+    background-color: #242541;
+    border-style: solid;
+    color: white;
     margin: 5px;
     display: flex;
     float: left;
 }
+.btn_upload:hover {
+background-color:white;
+color: #242541;
+}
 
 .img_upload {
-    /*filter: invert(100%);*/
+    filter: invert(100%);
 }
+.img_upload:hover {
+    filter: invert(14%) sepia(17%) saturate(1377%) hue-rotate(198deg) brightness(97%) contrast(97%);}
 
 .text_wrapper {
     font-size: 13px;
@@ -83,16 +108,23 @@
     text-decoration: none;
     background-color: white;
     border-style: solid;
-    border-color: #acacac;
+    border-color: #242541;
     border-width: 2px;
-    color: #353535;
     margin: 5px;
     display: flex;
     float: left;
 }
 
+.btn_else:hover {
+    background-color: #242541;
+    color:white;
+}
+
 .img_else {
-    /*filter: invert(18%) sepia(63%) saturate(5270%) hue-rotate(263deg) brightness(81%) contrast(120%);*/
+    filter: invert(14%) sepia(17%) saturate(1377%) hue-rotate(198deg) brightness(97%) contrast(97%);}
+
+.img_else:hover {
+    filter: invert(100%);
 }
 
 .folderIcon {
@@ -100,7 +132,11 @@
     padding: 5px;
     border-style: solid;
     border-radius: 20px;
-    border-color: #acacac;
+    border-color: black;
+}
+
+.darkmode_folderIcon {
+    filter: invert(100%);
 }
 
 .folders_wrapper {
@@ -112,4 +148,9 @@
     margin-left: 20px;
     font-size: 20px;
     color: #353535;
+    margin: 30px;
+}
+
+.darkmode_filelist_title_wrapper {
+    color: white;
 }
