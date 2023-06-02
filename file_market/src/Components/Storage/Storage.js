@@ -11,7 +11,7 @@ const Storage = (props) => {
   const colorTheme = props.colorTheme;
 
   const navigate = useNavigate();
-  
+
   return (
     <div
       className={`${styles.storage_wrapper} ${
