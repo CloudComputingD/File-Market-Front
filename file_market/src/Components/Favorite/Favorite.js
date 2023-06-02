@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
@@ -9,10 +8,15 @@ import ColorThemeChanger from "../ColorThemeChanger/Color_Theme_Changer";
 
 const Favorite = (props) => {
   const colorTheme = props.colorTheme;
+
   const navigate = useNavigate();
 
   return (
-    <div className={styles.storage_wrapper}>
+    <div
+      className={`${styles.storage_wrapper} ${
+        colorTheme === "light" ? null : styles.darkmode_storage_bgcolor
+      }`}
+    >
       <Header
         colorTheme={colorTheme}
         navigate={navigate}
@@ -37,7 +41,11 @@ const Favorite = (props) => {
             onRename={props.handleRename}
             colorTheme={colorTheme}
           ></FileList>
-          <FileInfo file={props.selectedFile} folder={props.selectedFolder}></FileInfo>
+          <FileInfo
+            file={props.selectedFile}
+            folder={props.selectedFolder}
+            colorTheme={colorTheme}
+          ></FileInfo>
         </div>
       </div>
       <ColorThemeChanger

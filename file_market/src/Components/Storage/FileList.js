@@ -135,7 +135,7 @@ const Folders = ({
           colorTheme === "light" ? null : styles.darkmode_filelist_title_wrapper
         }`}
       >
-        폴더
+        Folder
       </h2>
       <div className={styles.files_body}>
         {filteredFolderList.map((folder) => (
@@ -203,7 +203,7 @@ const Files = ({ filteredFileList, onFileSelect, colorTheme }) => {
           colorTheme === "light" ? null : styles.darkmode_filelist_title_wrapper
         }`}
       >
-        파일
+        File
       </h2>
       <div className={styles.files_body}>
         {filteredFileList.map((file) => (
