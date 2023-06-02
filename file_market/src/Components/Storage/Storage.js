@@ -45,6 +45,7 @@ const Storage = (props) => {
             file={props.selectedFile}
             folder={props.selectedFolder}
             colorTheme={colorTheme}
+            onFavorite={props.handleFavorite}
           ></FileInfo>
         </div>
       </div>

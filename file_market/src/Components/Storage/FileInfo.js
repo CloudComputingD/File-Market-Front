@@ -1,5 +1,6 @@
 import styles from "../../assets/css/Storage/FileInfo.module.css";
 import favoriteIcon from "../../assets/image/blackstaricon.png";
+import notFavoriteIcon from "../../assets/image/staricon.png";
 import infoIcon from "../../assets/image/infoicon.png";
 import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
@@ -22,9 +23,10 @@ const FavoriteFile = (props) => {
                 ? null
                 : styles.darkmode_information_icon
             }`}
-            src={favoriteIcon}
+            src={props.file.favorite ? favoriteIcon : notFavoriteIcon}
             width={25}
             height={25}
+            onClick={() => props.onFavorite(null, props.file)}
           ></img>
           <div
             className={`${
@@ -56,9 +58,10 @@ const FavoriteFile = (props) => {
                   ? null
                   : styles.darkmode_information_icon
               }`}
-              src={favoriteIcon}
+              src={props.folder.favorite ? favoriteIcon : notFavoriteIcon}
               width={25}
               height={25}
+              onClick={() => props.onFavorite(props.folder, null)}
             ></img>
           </div>
           <div
@@ -182,21 +185,22 @@ const Information = (props) => {
   }
 };
 
-const FileInfo = ({ file, folder, colorTheme }) => {
-  if (!file && !folder) {
+const FileInfo = (props) => {
+  if (!props.file && !props.folder) {
     return <div>No file or folder selected</div>;
   }
   return (
     <div className={styles.fileinfo_wrapper}>
       <FavoriteFile
-        file={file}
-        folder={folder}
-        colorTheme={colorTheme}
+        file={props.file}
+        folder={props.folder}
+        colorTheme={props.colorTheme}
+        onFavorite={props.onFavorite}
       ></FavoriteFile>
       <Information
-        file={file}
-        folder={folder}
-        colorTheme={colorTheme}
+        file={props.file}
+        folder={props.folder}
+        colorTheme={props.colorTheme}
       ></Information>
     </div>
   );

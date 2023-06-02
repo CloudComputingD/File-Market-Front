@@ -203,7 +203,9 @@ const dummyFolderList = [
 ];
 
 function App() {
-  const [colorTheme, setColorTheme] = useState(STATESNAMING.COLORTHEME.LIGHTTHEME);
+  const [colorTheme, setColorTheme] = useState(
+    STATESNAMING.COLORTHEME.LIGHTTHEME
+  );
   const [searchKey, setSearchKey] = useState(null);
   const [searchedFiles, setSearchedFiles] = useState([]);
   const [searchedFolders, setSearchedFolders] = useState([]);
@@ -212,6 +214,8 @@ function App() {
   const [favoriteFiles, setFavoriteFiles] = useState([]);
   const [favoriteFolders, setFavoriteFolders] = useState([]);
   const [extensionCategory, setExtensionCategory] = useState({});
+  const [favoriteIcon, setFavoriteIcon] = useState(null);
+  const [isFavorite, setFavorite] = useState(null);
 
   function getDeletedList() {
     setSearchKey(null);
@@ -221,29 +225,29 @@ function App() {
       if (file.deleted_time !== null) {
         arr1.push(file);
       }
-    })
+    });
     dummyFolderList.forEach((folder) => {
       if (folder.deleted_time !== null) {
         arr2.push(folder);
       }
-    })
+    });
     setDeletedFiles(arr1);
     setDeletedFolders(arr2);
-  };
+  }
 
   function getFavoriteList() {
     const arr1 = [];
     const arr2 = [];
     dummyFileList.forEach((file) => {
-      if (file.favorite == true) {
+      if (file.favorite === true) {
         arr1.push(file);
       }
-    })
+    });
     dummyFolderList.forEach((folder) => {
-      if (folder.favorite == true) {
+      if (folder.favorite === true) {
         arr2.push(folder);
       }
-    })
+    });
     setFavoriteFiles(arr1);
     setFavoriteFolders(arr2);
   }
@@ -255,11 +259,11 @@ function App() {
       setColorTheme(STATESNAMING.COLORTHEME.LIGHTTHEME);
     }
     console.log(colorTheme);
-  };
+  }
 
   function handleSearch(key) {
     setSearchKey(key);
-  };
+  }
 
   const [files, setFiles] = useState(dummyFileList); // file list
 
@@ -352,12 +356,50 @@ function App() {
     }
   };
 
+  const handleFavorite = (targetFolder, targetFile) => {
+    if (targetFolder) {
+      const updatedFolders = folders.map((folder) => {
+        if (folder.id === targetFolder.id && targetFolder.favorite) {
+          return { ...folder, favorite: false };
+        }
+        if (folder.id === targetFolder.id && targetFolder.favorite === false) {
+          return { ...folder, favorite: true };
+        }
+        return folder;
+      });
+      setFolders(updatedFolders);
+      updatedFolders.forEach((folder) => {
+        if (folder.id === targetFolder.id) {
+          setSelectedFolder(folder);
+        }
+      });
+    }
+
+    if (targetFile) {
+      const updatedFiles = files.map((file) => {
+        if (file.id === targetFile.id && targetFile.favorite) {
+          return { ...file, favorite: false };
+        }
+        if (file.id === targetFile.id && targetFile.favorite === false) {
+          return { ...file, favorite: true };
+        }
+        return file;
+      });
+      setFiles(updatedFiles);
+      updatedFiles.forEach((file) => {
+        if (file.id === targetFile.id) {
+          setSelectedFile(file);
+        }
+      });
+    }
+  };
+
   useEffect(() => {
     getDeletedList();
     getFavoriteList();
     const cate = Categorize(dummyFileList);
     setExtensionCategory(cate);
-  }, [])
+  }, []);
 
   useEffect(() => {
     if (searchKey !== null) {
@@ -366,37 +408,30 @@ function App() {
         if (file.title.includes(searchKey)) {
           arr1.push(file);
         }
-      })
+      });
       setSearchedFiles(arr1);
       const arr2 = [];
       dummyFolderList.forEach((folder) => {
         if (folder.title.includes(searchKey)) {
           arr2.push(folder);
         }
-      })
+      });
       setSearchedFolders(arr2);
     }
-  }, [searchKey])
-  
+  }, [searchKey]);
+
   return (
     <BrowserRouter>
       <Routes>
-        <Route
-          path="/"
-          element={
-            <Signin colorTheme={colorTheme}
-          />}
-        />
-        <Route 
-          path="signup"
-          element={
-            <Signup colorTheme={colorTheme}
-          />}
-        />
+        <Route path="/" element={<Signin colorTheme={colorTheme} />} />
+        <Route path="signup" element={<Signup colorTheme={colorTheme} />} />
         <Route
           path="storage/:folder_id"
           element={
-            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+            <Storage
+              handleSearch={handleSearch}
+              colorTheme={colorTheme}
+              handleChangeColorTheme={handleChangeColorTheme}
               handleDelete={handleDelete}
               files={files}
               filteredFiles={filteredFiles}
@@ -409,13 +444,18 @@ function App() {
               handleFolderSelect={handleFolderSelect}
               handleFolderDoubleClick={handleFolderDoubleClick}
               handleNewFolder={handleNewFolder}
-              handleRename={handleRename}/>
+              handleRename={handleRename}
+            />
           }
         />
         <Route
           path="dashboard"
           element={
-            <Dashboard extensionCategory={extensionCategory} handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+            <Dashboard
+              extensionCategory={extensionCategory}
+              handleSearch={handleSearch}
+              colorTheme={colorTheme}
+              handleChangeColorTheme={handleChangeColorTheme}
               handleDelete={handleDelete}
               files={files}
               filteredFiles={filteredFiles}
@@ -428,13 +468,17 @@ function App() {
               handleFolderSelect={handleFolderSelect}
               handleFolderDoubleClick={handleFolderDoubleClick}
               handleNewFolder={handleNewFolder}
-              handleRename={handleRename}/>
+              handleRename={handleRename}
+            />
           }
         />
         <Route
           path="storage"
           element={
-            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+            <Storage
+              handleSearch={handleSearch}
+              colorTheme={colorTheme}
+              handleChangeColorTheme={handleChangeColorTheme}
               handleDelete={handleDelete}
               files={files}
               filteredFiles={filteredFiles}
@@ -447,13 +491,18 @@ function App() {
               handleFolderSelect={handleFolderSelect}
               handleFolderDoubleClick={handleFolderDoubleClick}
               handleNewFolder={handleNewFolder}
-              handleRename={handleRename}/>
+              handleRename={handleRename}
+              handleFavorite={handleFavorite}
+            />
           }
         />
         <Route
           path="favorite"
           element={
-            <Favorite handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+            <Favorite
+              handleSearch={handleSearch}
+              colorTheme={colorTheme}
+              handleChangeColorTheme={handleChangeColorTheme}
               handleDelete={handleDelete}
               files={favoriteFiles}
               filteredFiles={favoriteFiles}
@@ -466,13 +515,18 @@ function App() {
               handleFolderSelect={handleFolderSelect}
               handleFolderDoubleClick={handleFolderDoubleClick}
               handleNewFolder={handleNewFolder}
-              handleRename={handleRename}/>
+              handleRename={handleRename}
+              handleFavorite={handleFavorite}
+            />
           }
         />
         <Route
           path="bin"
           element={
-            <Bin handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+            <Bin
+              handleSearch={handleSearch}
+              colorTheme={colorTheme}
+              handleChangeColorTheme={handleChangeColorTheme}
               handleDelete={handleDelete}
               files={deletedFiles}
               filteredFiles={deletedFiles}
@@ -485,13 +539,19 @@ function App() {
               handleFolderSelect={handleFolderSelect}
               handleFolderDoubleClick={handleFolderDoubleClick}
               handleNewFolder={handleNewFolder}
-              handleRename={handleRename}/>
+              handleRename={handleRename}
+            />
           }
         />
-        <Route 
+        <Route
           path="search"
           element={
-            <Search handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} searchedFiles={searchedFiles} searchedFolders={searchedFolders}
+            <Search
+              handleSearch={handleSearch}
+              colorTheme={colorTheme}
+              handleChangeColorTheme={handleChangeColorTheme}
+              searchedFiles={searchedFiles}
+              searchedFolders={searchedFolders}
               handleDelete={handleDelete}
               files={searchedFiles}
               filteredFiles={filteredFiles}
@@ -504,7 +564,8 @@ function App() {
               handleFolderSelect={handleFolderSelect}
               handleFolderDoubleClick={handleFolderDoubleClick}
               handleNewFolder={handleNewFolder}
-              handleRename={handleRename}/>
+              handleRename={handleRename}
+            />
           }
         />
       </Routes>
