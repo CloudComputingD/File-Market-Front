@@ -19,19 +19,20 @@ const Bin = (props) => {
                 <Sidebar currentPage="bin"/>
                 <div className={styles.bin_block}>
                     <FileList
-                        fileList={fileList}
-                        folderList={folderList}
-                        // onDelete={handleDelete}
-                        filteredFileList={fileList}
-                        filteredFolderList={folderList}
-                        // selectedFolder={selectedFolder}
-                        // selectedFile={selectedFile}
-                        // currentFolderName={currentFolderName}
-                        // onFileSelect={handleFileSelect}
-                        // onFolderSelect={handleFolderSelect}
-                        // onFolderDoubleClick={handleFolderDoubleClick}
-                        // onNewFolder={handleNewFolder}
-                        // onRename={handleRename}
+                        onDelete={props.handleDelete}
+                        fileList={props.files}
+                        filteredFileList={props.filteredFiles}
+                        folderList={props.folders}
+                        filteredFolderList={props.filteredFolders}
+                        selectedFolder={props.selectedFolder}
+                        selectedFile={props.selectedFile}
+                        currentFolderName={props.currentFolderName}
+                        onFileSelect={props.handleFileSelect}
+                        onFolderSelect={props.handleFolderSelect}
+                        onFolderDoubleClick={props.handleFolderDoubleClick}
+                        onNewFolder={props.handleNewFolder}
+                        onRename={props.handleRename}
+                        colorTheme={colorTheme}
                     />
                     
                 </div>

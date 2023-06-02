@@ -227,7 +227,7 @@ function App() {
     })
     setDeletedFiles(arr1);
     setDeletedFolders(arr2);
-  }
+  };
 
   function handleChangeColorTheme() {
     if (colorTheme === STATESNAMING.COLORTHEME.LIGHTTHEME) {
@@ -236,11 +236,102 @@ function App() {
       setColorTheme(STATESNAMING.COLORTHEME.LIGHTTHEME);
     }
     console.log(colorTheme);
-  }
+  };
 
   function handleSearch(key) {
     setSearchKey(key);
-  }
+  };
+
+  const [files, setFiles] = useState(dummyFileList); // file list
+
+  const [selectedFile, setSelectedFile] = useState(null);
+
+  const handleFileSelect = (file) => {
+    setSelectedFile(file);
+  };
+
+  const [folders, setFolders] = useState(dummyFolderList); // folder list
+
+  const [selectedFolder, setSelectedFolder] = useState(null);
+
+  const handleFolderSelect = (folder) => {
+    setSelectedFolder(folder);
+  };
+
+  const [currentFolderId, setCurrentFolderId] = useState(null); // 더블클릭한 folder's id
+  const [currentFolderName, setCurrentFolderName] = useState("My Storage");
+
+  const handleFolderDoubleClick = (folder) => {
+    setCurrentFolderId(folder.id);
+    setCurrentFolderName(folder.title);
+  };
+
+  // 선택된 폴더의 하위 파일 & 폴더 필터링
+  const filteredFiles = files.filter(
+    (file) => file.folder_id === currentFolderId
+  );
+  const filteredFolders = folders.filter((folder) =>
+    currentFolderId ? folder.id === currentFolderId : folder
+  );
+
+  const handleNewFolder = () => {
+    const folderName = prompt("Enter folder name!");
+    if (folderName) {
+      const newFolder = {
+        id: Date.now(), // 고유한 id 생성. (임시로 현재 시간 사용)
+        title: folderName,
+        created_time: new Date().getTime(),
+        deleted_time: null,
+        favorite: false,
+        user_id: 1,
+        trash: false,
+        size: 34235,
+      };
+      setFolders((prevFolders) => [...prevFolders, newFolder]); // 새로운 폴더 추가
+    }
+  };
+
+  const handleRename = (targetFolder, targetFile) => {
+    const newTitle = prompt("Enter new name!");
+    if (targetFolder) {
+      const updatedFolders = folders.map((folder) => {
+        if (folder.id === targetFolder.id) {
+          return { ...folder, title: newTitle };
+        }
+        return folder;
+      });
+      setFolders(updatedFolders);
+      setSelectedFolder(null);
+      alert("folder updated");
+    }
+    if (targetFile) {
+      const updatedFiles = files.map((file) => {
+        if (file.id === targetFile.id) {
+          return { ...file, title: newTitle };
+        }
+        return file;
+      });
+      setFiles(updatedFiles);
+      setSelectedFile(null);
+      alert("file updated");
+    }
+  };
+
+  const handleDelete = (targetFolder, targetFile) => {
+    if (targetFolder) {
+      setFolders((prevFolders) =>
+        prevFolders.filter((folder) => folder.id !== targetFolder.id)
+      );
+      setSelectedFolder(null);
+    }
+
+    if (targetFile) {
+      setFiles((prevFiles) =>
+        prevFiles.filter((file) => file.id !== targetFile.id)
+      );
+      setSelectedFile(null);
+    }
+  };
 
   useEffect(() => {
     getDeletedList();
@@ -285,37 +376,115 @@ function App() {
         <Route
           path="storage/:folder_id"
           element={
-            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+              handleDelete={handleDelete}
+              files={files}
+              filteredFiles={filteredFiles}
+              folders={folders}
+              filteredFolders={filteredFolders}
+              selectedFolder={selectedFolder}
+              selectedFile={selectedFile}
+              currentFolderName={currentFolderName}
+              handleFileSelect={handleFileSelect}
+              handleFolderSelect={handleFolderSelect}
+              handleFolderDoubleClick={handleFolderDoubleClick}
+              handleNewFolder={handleNewFolder}
+              handleRename={handleRename}/>
           }
         />
         <Route
           path="dashboard"
           element={
-            <Dashboard extensionCategory={extensionCategory} handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Dashboard extensionCategory={extensionCategory} handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+              handleDelete={handleDelete}
+              files={files}
+              filteredFiles={filteredFiles}
+              folders={folders}
+              filteredFolders={filteredFolders}
+              selectedFolder={selectedFolder}
+              selectedFile={selectedFile}
+              currentFolderName={currentFolderName}
+              handleFileSelect={handleFileSelect}
+              handleFolderSelect={handleFolderSelect}
+              handleFolderDoubleClick={handleFolderDoubleClick}
+              handleNewFolder={handleNewFolder}
+              handleRename={handleRename}/>
           }
         />
         <Route
           path="storage"
           element={
-            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Storage handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+              handleDelete={handleDelete}
+              files={files}
+              filteredFiles={filteredFiles}
+              folders={folders}
+              filteredFolders={filteredFolders}
+              selectedFolder={selectedFolder}
+              selectedFile={selectedFile}
+              currentFolderName={currentFolderName}
+              handleFileSelect={handleFileSelect}
+              handleFolderSelect={handleFolderSelect}
+              handleFolderDoubleClick={handleFolderDoubleClick}
+              handleNewFolder={handleNewFolder}
+              handleRename={handleRename}/>
           }
         />
         <Route
           path="favorite"
           element={
-            <Favorite handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={dummyFileList} folderList={dummyFolderList} />
+            <Favorite handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+              handleDelete={handleDelete}
+              files={files}
+              filteredFiles={filteredFiles}
+              folders={folders}
+              filteredFolders={filteredFolders}
+              selectedFolder={selectedFolder}
+              selectedFile={selectedFile}
+              currentFolderName={currentFolderName}
+              handleFileSelect={handleFileSelect}
+              handleFolderSelect={handleFolderSelect}
+              handleFolderDoubleClick={handleFolderDoubleClick}
+              handleNewFolder={handleNewFolder}
+              handleRename={handleRename}/>
           }
         />
         <Route
           path="bin"
           element={
-            <Bin handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} fileList={deletedFiles} folderList={deletedFolders} />
+            <Bin handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
+              handleDelete={handleDelete}
+              files={deletedFiles}
+              filteredFiles={filteredFiles}
+              folders={deletedFolders}
+              filteredFolders={filteredFolders}
+              selectedFolder={selectedFolder}
+              selectedFile={selectedFile}
+              currentFolderName={currentFolderName}
+              handleFileSelect={handleFileSelect}
+              handleFolderSelect={handleFolderSelect}
+              handleFolderDoubleClick={handleFolderDoubleClick}
+              handleNewFolder={handleNewFolder}
+              handleRename={handleRename}/>
           }
         />
         <Route 
           path="search"
           element={
-            <Search handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} searchedFiles={searchedFiles} searchedFolders={searchedFolders}/>
+            <Search handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme} searchedFiles={searchedFiles} searchedFolders={searchedFolders}
+              handleDelete={handleDelete}
+              files={searchedFiles}
+              filteredFiles={filteredFiles}
+              folders={searchedFolders}
+              filteredFolders={filteredFolders}
+              selectedFolder={selectedFolder}
+              selectedFile={selectedFile}
+              currentFolderName={currentFolderName}
+              handleFileSelect={handleFileSelect}
+              handleFolderSelect={handleFolderSelect}
+              handleFolderDoubleClick={handleFolderDoubleClick}
+              handleNewFolder={handleNewFolder}
+              handleRename={handleRename}/>
           }
         />
       </Routes>

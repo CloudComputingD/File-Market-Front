@@ -4,7 +4,7 @@ import SignupModal from './SignupModal';
 
 const LeftBlock = () => {
     return(
-        <div style={{ width: '40%', backgroundColor:"#acacac" }} />
+        <div style={{ width: '40%', backgroundColor:"#242541" }} />
     )
 }
 

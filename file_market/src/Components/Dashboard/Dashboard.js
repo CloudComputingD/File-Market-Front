@@ -10,16 +10,6 @@ import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 const Dashboard = (props) => {
     const navigate = useNavigate();
     const colorTheme = props.colorTheme;
-    const tempFileList = props.fileList;
-    const fileList = (() => {
-        const arr = [];
-        tempFileList.forEach((el) => {
-            if (el.extension !== '') {
-                arr.push(el);
-            }
-        })
-        return arr;
-    });
 
     return(
         <div className={`${styles.dashboard_wrapper} ${colorTheme === 'light' ? null : styles.darkmode_bgcolor}`}>
@@ -27,8 +17,8 @@ const Dashboard = (props) => {
             <div className={styles.dashboard_block_wrapper}>
                 <Sidebar colorTheme={props.colorTheme} currentPage="dashboard"/>
                 <div className={styles.dashboard_block}>
-                    <Chart extensionCategory={props.extensionCategory} colorTheme={colorTheme} fileList={fileList} />
-                    <FileTable colorTheme={colorTheme} fileList={fileList} />
+                    <Chart extensionCategory={props.extensionCategory} colorTheme={colorTheme} fileList={props.files} />
+                    <FileTable colorTheme={colorTheme} fileList={props.files} />
                 </div>
             </div>
             <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>

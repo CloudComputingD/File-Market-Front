@@ -1,6 +1,6 @@
 .filelist_wrapper {
     border-right-width: 2px;
-    border-right-color: #acacac;
+    border-right-color: #242541;
     border-right-style: solid;
     display: flex;
     flex-direction: column;
@@ -52,7 +52,7 @@
 .btn_wrapper {
     width: 100%;
     height: 60px;
-    border-bottom: 2px solid #acacac;
+    border-bottom: 2px solid #242541;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
