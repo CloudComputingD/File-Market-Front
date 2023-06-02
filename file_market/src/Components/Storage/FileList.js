@@ -135,7 +135,7 @@ const Folders = ({
           colorTheme === "light" ? null : styles.darkmode_filelist_title_wrapper
         }`}
       >
-        Folder
+        folder
       </h2>
       <div className={styles.files_body}>
         {filteredFolderList.map((folder) => (
@@ -152,28 +152,22 @@ const Folders = ({
               fontWeight: hoveredFolder === folder ? "bold" : "normal",
             }}
           >
-            <Link
-              to={`/storage/` + folder.id}
-              style={{ textDecoration: "none", color: "black" }}
-              key={folder.id}
+            <img
+              className={`${styles.folderIcon} ${
+                colorTheme === "light" ? null : styles.darkmode_folderIcon
+              }`}
+              src={folderIcon}
+              alt={folder.title}
+            />
+            <br></br>
+            <div className={styles.each_title}></div>
+            <text
+              className={`${styles.text} ${
+                colorTheme === "light" ? null : styles.darkmode_text
+              }`}
             >
-              <img
-                className={`${styles.folderIcon} ${
-                  colorTheme === "light" ? null : styles.darkmode_folderIcon
-                }`}
-                src={folderIcon}
-                alt={folder.title}
-              />
-              <br></br>
-              <div className={styles.each_title}></div>
-              <text
-                className={`${styles.text} ${
-                  colorTheme === "light" ? null : styles.darkmode_text
-                }`}
-              >
-                {folder.title}
-              </text>
-            </Link>
+              {folder.title}
+            </text>
           </div>
         ))}
       </div>
@@ -203,7 +197,7 @@ const Files = ({ filteredFileList, onFileSelect, colorTheme }) => {
           colorTheme === "light" ? null : styles.darkmode_filelist_title_wrapper
         }`}
       >
-        File
+        file
       </h2>
       <div className={styles.files_body}>
         {filteredFileList.map((file) => (
