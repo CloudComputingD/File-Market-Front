@@ -209,6 +209,8 @@ function App() {
   const [searchedFolders, setSearchedFolders] = useState([]);
   const [deletedFiles, setDeletedFiles] = useState([]);
   const [deletedFolders, setDeletedFolders] = useState([]);
+  const [favoriteFiles, setFavoriteFiles] = useState([]);
+  const [favoriteFolders, setFavoriteFolders] = useState([]);
   const [extensionCategory, setExtensionCategory] = useState({});
 
   function getDeletedList() {
@@ -228,6 +230,23 @@ function App() {
     setDeletedFiles(arr1);
     setDeletedFolders(arr2);
   };
+
+  function getFavoriteList() {
+    const arr1 = [];
+    const arr2 = [];
+    dummyFileList.forEach((file) => {
+      if (file.favorite == true) {
+        arr1.push(file);
+      }
+    })
+    dummyFolderList.forEach((folder) => {
+      if (folder.favorite == true) {
+        arr2.push(folder);
+      }
+    })
+    setFavoriteFiles(arr1);
+    setFavoriteFolders(arr2);
+  }
 
   function handleChangeColorTheme() {
     if (colorTheme === STATESNAMING.COLORTHEME.LIGHTTHEME) {
@@ -335,6 +354,7 @@ function App() {
 
   useEffect(() => {
     getDeletedList();
+    getFavoriteList();
     const cate = Categorize(dummyFileList);
     setExtensionCategory(cate);
   }, [])
@@ -435,10 +455,10 @@ function App() {
           element={
             <Favorite handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
               handleDelete={handleDelete}
-              files={files}
-              filteredFiles={filteredFiles}
-              folders={folders}
-              filteredFolders={filteredFolders}
+              files={favoriteFiles}
+              filteredFiles={favoriteFiles}
+              folders={favoriteFolders}
+              filteredFolders={favoriteFolders}
               selectedFolder={selectedFolder}
               selectedFile={selectedFile}
               currentFolderName={currentFolderName}
@@ -455,9 +475,9 @@ function App() {
             <Bin handleSearch={handleSearch} colorTheme={colorTheme} handleChangeColorTheme={handleChangeColorTheme}
               handleDelete={handleDelete}
               files={deletedFiles}
-              filteredFiles={filteredFiles}
+              filteredFiles={deletedFiles}
               folders={deletedFolders}
-              filteredFolders={filteredFolders}
+              filteredFolders={deletedFolders}
               selectedFolder={selectedFolder}
               selectedFile={selectedFile}
               currentFolderName={currentFolderName}
