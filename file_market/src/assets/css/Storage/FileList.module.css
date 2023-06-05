@@ -139,6 +139,19 @@ color: #242541;
     filter: invert(100%);
 }
 
+.rootIcon {
+    width: 100px;
+    padding: 10px;
+    border-style: solid;
+    border-radius: 20px;
+    border-color: black;
+}
+
+.files_each:hover {
+    background-color: lightblue;
+    font-weight: bold;
+}
+
 .folders_wrapper {
     display: flex;
     flex-direction: row;

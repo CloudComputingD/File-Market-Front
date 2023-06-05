@@ -214,8 +214,6 @@ function App() {
   const [favoriteFiles, setFavoriteFiles] = useState([]);
   const [favoriteFolders, setFavoriteFolders] = useState([]);
   const [extensionCategory, setExtensionCategory] = useState({});
-  const [favoriteIcon, setFavoriteIcon] = useState(null);
-  const [isFavorite, setFavorite] = useState(null);
 
   function getDeletedList() {
     setSearchKey(null);
@@ -291,10 +289,10 @@ function App() {
 
   // 선택된 폴더의 하위 파일 & 폴더 필터링
   const filteredFiles = files.filter(
-    (file) => file.folder_id === currentFolderId
+    (file) => file.folder_id == currentFolderId
   );
   const filteredFolders = folders.filter((folder) =>
-    currentFolderId ? folder.id === currentFolderId : folder
+    currentFolderId ? folder.id == currentFolderId : folder
   );
 
   const handleNewFolder = () => {

@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import styles from "../../assets/css/Storage/FileList.module.css";
 import uploadIcon from "../../assets/image/uploadicon.png";
 import downloadIcon from "../../assets/image/downloadicon.png";
@@ -7,7 +6,7 @@ import newFolderIcon from "../../assets/image/addfoldericon.png";
 import binIcon from "../../assets/image/binicon.png";
 import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
-import { Link } from "react-router-dom";
+import rootIcon from "../../assets/image/rooticon.png";
 
 const Button = (props) => {
   const handleNewFolderClick = () => {
@@ -108,24 +107,20 @@ const Button = (props) => {
 };
 
 const Folders = ({
-  folderList,
   filteredFolderList,
   onFolderSelect,
   onFolderDoubleClick,
+  onFileSelect,
   colorTheme,
 }) => {
-  const [hoveredFolder, setHoveredFolder] = useState(null);
-
   const handleFolderClick = (folder) => {
     onFolderSelect(folder);
   };
 
-  const handleFolderMouseEnter = (folder) => {
-    setHoveredFolder(folder);
-  };
-
-  const handleFolderMouseLeave = () => {
-    setHoveredFolder(null);
+  const handleRootFolderClick = () => {
+    onFileSelect(0);
+    onFolderDoubleClick(0);
+    handleFolderClick(null);
   };
 
   return (
@@ -138,19 +133,30 @@ const Folders = ({
         folder
       </h2>
       <div className={styles.files_body}>
+        <div className={styles.files_each} onClick={handleRootFolderClick}>
+          <img
+            className={`${styles.rootIcon} ${
+              colorTheme === "light" ? null : styles.darkmode_folderIcon
+            }`}
+            src={rootIcon}
+            alt="root folder"
+          />
+          <br></br>
+          <div className={styles.each_title}></div>
+          <text
+            className={`${styles.text} ${
+              colorTheme === "light" ? null : styles.darkmode_text
+            }`}
+          >
+            ./
+          </text>
+        </div>
         {filteredFolderList.map((folder) => (
           <div
             className={styles.files_each}
             key={folder.id}
             onClick={() => handleFolderClick(folder)}
-            onMouseEnter={() => handleFolderMouseEnter(folder)}
-            onMouseLeave={handleFolderMouseLeave}
             onDoubleClick={() => onFolderDoubleClick(folder)}
-            style={{
-              background:
-                hoveredFolder === folder ? "lightblue" : "transparent",
-              fontWeight: hoveredFolder === folder ? "bold" : "normal",
-            }}
           >
             <img
               className={`${styles.folderIcon} ${
@@ -176,18 +182,8 @@ const Folders = ({
 };
 
 const Files = ({ filteredFileList, onFileSelect, colorTheme }) => {
-  const [hoveredFile, setHoveredFile] = useState(null);
-
   const handleFileClick = (file) => {
     onFileSelect(file);
-  };
-
-  const handleFileMouseEnter = (file) => {
-    setHoveredFile(file);
-  };
-
-  const handleFileMouseLeave = () => {
-    setHoveredFile(null);
   };
 
   return (
@@ -205,12 +201,6 @@ const Files = ({ filteredFileList, onFileSelect, colorTheme }) => {
             className={styles.files_each}
             key={file.id}
             onClick={() => handleFileClick(file)}
-            onMouseEnter={() => handleFileMouseEnter(file)}
-            onMouseLeave={handleFileMouseLeave}
-            style={{
-              background: hoveredFile === file ? "lightblue" : "transparent",
-              fontWeight: hoveredFile === file ? "bold" : "normal",
-            }}
           >
             <img
               className={`${styles.folderIcon} ${
@@ -250,6 +240,7 @@ const FileList = (props) => {
         folderList={props.folderList}
         filteredFolderList={props.filteredFolderList}
         onFolderSelect={props.onFolderSelect}
+        onFileSelect={props.onFileSelect}
         onFolderDoubleClick={props.onFolderDoubleClick}
         colorTheme={props.colorTheme}
       ></Folders>
