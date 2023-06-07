@@ -282,9 +282,10 @@ function App() {
   const [currentFolderId, setCurrentFolderId] = useState(null); // 더블클릭한 folder's id
   const [currentFolderName, setCurrentFolderName] = useState("My Storage");
 
-  const handleFolderDoubleClick = (folder) => {
+  const handleFolderDoubleClick = (folder, navigate) => {
     setCurrentFolderId(folder.id);
     setCurrentFolderName(folder.title);
+    navigate('/storage');
   };
 
   // 선택된 폴더의 하위 파일 & 폴더 필터링
@@ -552,9 +553,9 @@ function App() {
               searchedFolders={searchedFolders}
               handleDelete={handleDelete}
               files={searchedFiles}
-              filteredFiles={filteredFiles}
+              filteredFiles={searchedFiles}
               folders={searchedFolders}
-              filteredFolders={filteredFolders}
+              filteredFolders={searchedFolders}
               selectedFolder={selectedFolder}
               selectedFile={selectedFile}
               currentFolderName={currentFolderName}

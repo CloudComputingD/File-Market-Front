@@ -17,20 +17,29 @@ const Search = (props) => {
             <div className={styles.search_block_wrapper}>
                 <Sidebar currentPage="search"/>
                 <div className={styles.search_block}>
-                <FileList
-                    fileList={fileList}
-                    filteredFileList={fileList}
-                    folderList={props.searchedFolders}
-                    filteredFolderList={props.searchedFolders}
-                    // onDelete={handleDelete}
-                    // selectedFolder={selectedFolder}
-                    // selectedFile={selectedFile}
-                    // onFileSelect={handleFileSelect}
-                    // onFolderSelect={handleFolderSelect}
-                    // onNewFolder={handleNewFolder}
-                    // onRename={handleRename}
-                />
-                    <FileInfo />
+                    <FileList
+                        navigate={navigate}
+                        onDelete={props.handleDelete}
+                        fileList={props.files}
+                        filteredFileList={props.filteredFiles}
+                        folderList={props.folders}
+                        filteredFolderList={props.filteredFolders}
+                        selectedFolder={props.selectedFolder}
+                        selectedFile={props.selectedFile}
+                        currentFolderName={props.currentFolderName}
+                        onFileSelect={props.handleFileSelect}
+                        onFolderSelect={props.handleFolderSelect}
+                        onFolderDoubleClick={props.handleFolderDoubleClick}
+                        onNewFolder={props.handleNewFolder}
+                        onRename={props.handleRename}
+                        colorTheme={colorTheme}
+                    />
+                    <FileInfo
+                        file={props.selectedFile}
+                        folder={props.selectedFolder}
+                        colorTheme={colorTheme}
+                        onFavorite={props.handleFavorite}
+                    ></FileInfo>
                 </div>
             </div>
             <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>

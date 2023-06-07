@@ -10,8 +10,6 @@ import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 const Bin = (props) => {
     const colorTheme = props.colorTheme;
     const navigate = useNavigate();
-    const fileList = props.fileList;
-    const folderList = props.folderList;
     return(
         <div className={`${styles.bin_wrapper} ${colorTheme === 'light' ? null : styles.darkmode_bgcolor}`}>
             <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
@@ -19,6 +17,7 @@ const Bin = (props) => {
                 <Sidebar currentPage="bin"/>
                 <div className={styles.bin_block}>
                     <FileList
+                        navigate={navigate}
                         onDelete={props.handleDelete}
                         fileList={props.files}
                         filteredFileList={props.filteredFiles}
@@ -34,7 +33,12 @@ const Bin = (props) => {
                         onRename={props.handleRename}
                         colorTheme={colorTheme}
                     />
-                    
+                    <FileInfo
+                        file={props.selectedFile}
+                        folder={props.selectedFolder}
+                        colorTheme={colorTheme}
+                        onFavorite={props.handleFavorite}
+                    ></FileInfo>
                 </div>
             </div>
             <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>

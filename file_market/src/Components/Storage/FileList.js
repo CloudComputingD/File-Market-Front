@@ -112,14 +112,15 @@ const Folders = ({
   onFolderDoubleClick,
   onFileSelect,
   colorTheme,
+  navigate,
 }) => {
   const handleFolderClick = (folder) => {
     onFolderSelect(folder);
   };
 
-  const handleRootFolderClick = () => {
+  const handleRootFolderClick = (navigate) => {
     onFileSelect(0);
-    onFolderDoubleClick(0);
+    onFolderDoubleClick(0, navigate);
     handleFolderClick(null);
   };
 
@@ -133,7 +134,7 @@ const Folders = ({
         folder
       </h2>
       <div className={styles.files_body}>
-        <div className={styles.files_each} onClick={handleRootFolderClick}>
+        <div className={styles.files_each} onClick={() => handleRootFolderClick(navigate)}>
           <img
             className={`${styles.rootIcon} ${
               colorTheme === "light" ? null : styles.darkmode_folderIcon
@@ -156,7 +157,7 @@ const Folders = ({
             className={styles.files_each}
             key={folder.id}
             onClick={() => handleFolderClick(folder)}
-            onDoubleClick={() => onFolderDoubleClick(folder)}
+            onDoubleClick={() => onFolderDoubleClick(folder, navigate)}
           >
             <img
               className={`${styles.folderIcon} ${
@@ -181,7 +182,7 @@ const Folders = ({
   );
 };
 
-const Files = ({ filteredFileList, onFileSelect, colorTheme }) => {
+const Files = ({ fileList, filteredFileList, onFileSelect, colorTheme }) => {
   const handleFileClick = (file) => {
     onFileSelect(file);
   };
@@ -237,6 +238,7 @@ const FileList = (props) => {
         colorTheme={props.colorTheme}
       ></Button>
       <Folders
+        navigate={props.navigate}
         folderList={props.folderList}
         filteredFolderList={props.filteredFolderList}
         onFolderSelect={props.onFolderSelect}

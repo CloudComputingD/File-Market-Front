@@ -26,6 +26,7 @@ const Storage = (props) => {
         <Sidebar currentPage="storage" />
         <div className={styles.storage_block}>
           <FileList
+            navigate={navigate}
             onDelete={props.handleDelete}
             fileList={props.files}
             filteredFileList={props.filteredFiles}
