@@ -48,6 +48,11 @@ const RightBlock = () => {
               className={styles.signin_input}
             />
           </div>
+          <div className={styles.google_signin_button_wrapper}>
+              <button>
+                google
+              </button>
+          </div>
           <div className={styles.signin_button_wrapper}>
             <button
               className={styles.signup_button}

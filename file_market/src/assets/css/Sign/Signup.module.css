@@ -50,6 +50,12 @@
     padding-left: 10px;
 }
 
+.google_signin_button_wrapper {
+    display: flex;
+    flex-direction: column;
+    margin-top: 50px;
+}
+
 .signup_button_wrapper {
     display: flex;
     flex-direction: row;
