@@ -25,10 +25,14 @@ const DashboardMenu = (props) => {
         <div className={styles.sidebar_menu_button_image_wrapper}>
           <img
             src={DashboardIcon}
-            className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'dashboard' ? styles.sidebar_cur_menu_button_image : null}`}
+            className={`${styles.sidebar_menu_button_image} ${
+              props.currentPage === "dashboard"
+                ? styles.sidebar_cur_menu_button_image
+                : null
+            }`}
           />
         </div>
-        <div className={styles.sidebar_menu_title_wrapper}>Dashboard</div>
+        <div className={styles.sidebar_menu_title_wrapper}>&nbsp;Dashboard</div>
       </button>
     </div>
   );
@@ -39,7 +43,7 @@ const StorageMenu = (props) => {
     props.currentPage === "storage"
       ? styles.sidebar_curpage_menu_button
       : styles.sidebar_normal_menu_button;
-  
+
   return (
     <div className={styles.sidebar_menu_button_wrapper}>
       <button
@@ -49,9 +53,16 @@ const StorageMenu = (props) => {
         }}
       >
         <div className={styles.sidebar_menu_button_image_wrapper}>
-          <img src={StorageIcon} className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'storage' ? styles.sidebar_cur_menu_button_image : null}`} />
+          <img
+            src={StorageIcon}
+            className={`${styles.sidebar_menu_button_image} ${
+              props.currentPage === "storage"
+                ? styles.sidebar_cur_menu_button_image
+                : null
+            }`}
+          />
         </div>
-        <div className={styles.sidebar_menu_title_wrapper}>Storage</div>
+        <div className={styles.sidebar_menu_title_wrapper}>&nbsp;Storage</div>
       </button>
     </div>
   );
@@ -74,10 +85,14 @@ const FavoriteMenu = (props) => {
         <div className={styles.sidebar_menu_button_image_wrapper}>
           <img
             src={FavoriteIcon}
-            className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'favorite' ? styles.sidebar_cur_menu_button_image : null}`}
+            className={`${styles.sidebar_menu_button_image} ${
+              props.currentPage === "favorite"
+                ? styles.sidebar_cur_menu_button_image
+                : null
+            }`}
           />
         </div>
-        <div className={styles.sidebar_menu_title_wrapper}>Favorite</div>
+        <div className={styles.sidebar_menu_title_wrapper}>&nbsp;Favorite</div>
       </button>
     </div>
   );
@@ -100,9 +115,16 @@ const BinMenu = (props) => {
         }}
       >
         <div className={styles.sidebar_menu_button_image_wrapper}>
-          <img src={BinIcon} className={`${styles.sidebar_menu_button_image} ${props.currentPage === 'bin' ? styles.sidebar_cur_menu_button_image : null}`} />
+          <img
+            src={BinIcon}
+            className={`${styles.sidebar_menu_button_image} ${
+              props.currentPage === "bin"
+                ? styles.sidebar_cur_menu_button_image
+                : null
+            }`}
+          />
         </div>
-        <div className={styles.sidebar_menu_title_wrapper}>Bin</div>
+        <div className={styles.sidebar_menu_title_wrapper}>&nbsp;Bin</div>
       </button>
     </div>
   );
@@ -116,10 +138,27 @@ const Sidebar = (props) => {
   return (
     <div className={styles.sidebar_wrapper}>
       <div className={styles.sidebar_menu_block}>
-        <DashboardMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
-        <StorageMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
-        <FavoriteMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
-        <BinMenu colorTheme={colorTheme} navigate={navigate} currentPage={currentPage} />
+        <br></br>
+        <DashboardMenu
+          colorTheme={colorTheme}
+          navigate={navigate}
+          currentPage={currentPage}
+        />
+        <StorageMenu
+          colorTheme={colorTheme}
+          navigate={navigate}
+          currentPage={currentPage}
+        />
+        <FavoriteMenu
+          colorTheme={colorTheme}
+          navigate={navigate}
+          currentPage={currentPage}
+        />
+        <BinMenu
+          colorTheme={colorTheme}
+          navigate={navigate}
+          currentPage={currentPage}
+        />
       </div>
     </div>
   );
