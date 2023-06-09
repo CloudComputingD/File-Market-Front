@@ -90,7 +90,7 @@ const RightBlock = () => {
             <input
               id="id_input"
               name="id_input"
-              placeholder="ID"
+              placeholder="Email"
               value={idValue}
               onChange={(event) => {
                 setId(event.target.value);

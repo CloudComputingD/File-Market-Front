@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../assets/css/Sign/Signin.module.css";
+import GoogleIcon from "../../assets/image/googleicon.png";
 
 const LeftBlock = () => {
   return <div className={styles.left_block_wrapper} />;
@@ -28,7 +29,7 @@ const RightBlock = () => {
             <input
               id="id_input"
               name="id_input"
-              placeholder="ID"
+              placeholder="Email"
               value={idValue}
               onChange={(event) => {
                 setId(event.target.value);
@@ -47,11 +48,6 @@ const RightBlock = () => {
               }}
               className={styles.signin_input}
             />
-          </div>
-          <div className={styles.google_signin_button_wrapper}>
-              <button>
-                google
-              </button>
           </div>
           <div className={styles.signin_button_wrapper}>
             <button
@@ -76,6 +72,16 @@ const RightBlock = () => {
             </button>
           </div>
         </div>
+        <div className={styles.google_signin_button_wrapper}>
+              <button
+                className={styles.google_signin_button}
+                onClick={() => {}}>
+                  <img src={GoogleIcon} className={styles.google_icon}/>
+                  <div className={styles.google_signin_title}>
+                    Sign in with Google
+                  </div>
+              </button>
+          </div>
       </div>
     </div>
   );

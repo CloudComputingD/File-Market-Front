@@ -1,3 +1,13 @@
+@font-face {
+    font-family: "Lato Bold";
+    src: url('../../fonts/Lato-Bold.ttf');
+}
+
+@font-face {
+    font-family: "Lato Regular";
+    src: url('../../fonts/Lato-Regular.ttf');
+}
+
 .signup {
     height: 100vh;
     display: flex;
@@ -28,6 +38,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: "Lato Bold";
     font-size: 70px;
     font-weight: bold;
 }
@@ -48,6 +59,7 @@
     height: 40px;
     font-size: 20px;
     padding-left: 10px;
+    font-family: "Lato Regular";
 }
 
 .google_signin_button_wrapper {
@@ -77,6 +89,7 @@
     margin: 5px;
     justify-content: center;
     align-items: center;
+    font-family: "Lato Regular";
 }
 
 .signup_button {
@@ -93,4 +106,5 @@
     margin: 5px;
     justify-content: center;
     align-items: center;
+    font-family: "Lato Regular";
 }
