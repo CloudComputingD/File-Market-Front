@@ -117,15 +117,11 @@ const Information = (props) => {
               : styles.darkmode_information_text
           }`}
         >
-          File name: {props.file.title}
-          <br></br>
-          Author id: {props.file.user_id}
-          <br></br>
           Size: {FormatBytes(props.file.size)}
           <br></br>
           Uploaded: {props.file.created_time}
           <br></br>
-          Favorite: {props.file.favorite ? "O" : "X"}
+          Extension: 하하 고치삼
           <br></br>
           Parent folder: {props.file.folder_id}
         </div>
@@ -170,15 +166,12 @@ const Information = (props) => {
               : styles.darkmode_information_text
           }`}
         >
-          Folder name: {props.folder.title}
-          <br></br>
-          Author id: {props.folder.user_id}
-          <br></br>
           Size: {FormatBytes(props.folder.size)}
           <br></br>
           Uploaded: {props.folder.created_time}
           <br></br>
-          Favorite: {props.folder.favorite ? "O" : "X"}
+          Extension: 하하 고치삼
+          <br></br>
         </div>
       </div>
     );

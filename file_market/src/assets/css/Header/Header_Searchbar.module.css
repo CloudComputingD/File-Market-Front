@@ -33,10 +33,13 @@
     height: 40px;
     border-radius: 30px;
     font-family: 'Lato Regular';
+    border-color: #242541;
+    background-color: white;
+    border-style: solid;
+    color: #242541;
 }
 
 .darkmode_button {
     background-color: #242541;
-    border: 0px;
     color: white;
 }
