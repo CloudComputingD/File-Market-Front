@@ -5,8 +5,9 @@ export const APIURL = {
     USER_CONTROLLER: {
         // POST
         POST: {
-            // join : Sign Up API
-            join: serverIP + "join"
+            // Signup : Sign Up API
+            // signup: serverIP + "signup",
+            signup: "/signup"
         },
         // GET
         GET: {

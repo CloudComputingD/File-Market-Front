@@ -2,6 +2,7 @@ import styles from "../../assets/css/Sign/Signup.module.css";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SignupModal from "./SignupModal";
+import * as API_MANAGER from "../../API/APIManager";
 
 const LeftBlock = () => {
   return <div style={{ width: "40%", backgroundColor: "#242541" }} />;
@@ -154,9 +155,15 @@ const RightBlock = () => {
             </button>
             <button
               className={styles.signup_button}
-              onClick={() => {
+              onClick={ async() => {
                 if (checkSignupAvailable()) {
-                  openModal();
+                  const api_result = await API_MANAGER.API_Signup(idValue, nameValue, pwValue);
+                  if (api_result.success) {
+                    alert("success");
+                    navigate('/');
+                  } else {
+                    alert("fail");
+                  }
                 } else {
                   alert("Warning!");
                 }

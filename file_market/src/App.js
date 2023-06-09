@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { STATESNAMING } from "./Configuration/StatesNaing";
+import * as API_MANAGER from "./API/APIManager";
 import Signin from "./Components/Sign/Signin";
 import Signup from "./Components/Sign/Signup";
 import Storage from "./Components/Storage/Storage";
