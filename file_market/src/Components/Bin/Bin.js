@@ -17,6 +17,7 @@ const Bin = (props) => {
                 <Sidebar currentPage="bin"/>
                 <div className={styles.bin_block}>
                     <FileList
+                        curPage={"bin"}
                         navigate={navigate}
                         onDelete={props.handleDelete}
                         fileList={props.files}
@@ -34,6 +35,7 @@ const Bin = (props) => {
                         colorTheme={colorTheme}
                     />
                     <FileInfo
+                        handleFavChange={props.handleFavChange}
                         file={props.selectedFile}
                         folder={props.selectedFolder}
                         colorTheme={colorTheme}

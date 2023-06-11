@@ -24,6 +24,7 @@ const Searchbar = (props) => {
         }`}
         onClick={() => {
           props.handleSearchKey(searchValue);
+          setSearchValue(null);
         }}
       >
         Search

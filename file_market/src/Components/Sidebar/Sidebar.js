@@ -49,6 +49,7 @@ const StorageMenu = (props) => {
       <button
         className={button_style}
         onClick={() => {
+          localStorage.setItem("currentFolderId", 1);
           props.navigate("/storage");
         }}
       >
@@ -79,6 +80,7 @@ const FavoriteMenu = (props) => {
       <button
         className={button_style}
         onClick={() => {
+          localStorage.setItem("currentFolderId", 1);
           props.navigate("/favorite");
         }}
       >
@@ -110,6 +112,7 @@ const BinMenu = (props) => {
         className={button_style}
         onClick={() => {
           if (props.currentPage !== "bin") {
+            localStorage.setItem("currentFolderId", 1);
             props.navigate("/bin");
           }
         }}

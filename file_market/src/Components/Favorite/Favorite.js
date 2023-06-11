@@ -26,6 +26,7 @@ const Favorite = (props) => {
         <Sidebar currentPage="favorite" />
         <div className={styles.storage_block}>
           <FileList
+            curPage={"favorite"}
             navigate={navigate}
             onDelete={props.handleDelete}
             fileList={props.files}
@@ -43,6 +44,7 @@ const Favorite = (props) => {
             colorTheme={colorTheme}
           ></FileList>
           <FileInfo
+            handleFavChange={props.handleFavChange}
             file={props.selectedFile}
             folder={props.selectedFolder}
             colorTheme={colorTheme}

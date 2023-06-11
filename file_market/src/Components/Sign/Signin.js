@@ -2,20 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "../../assets/css/Sign/Signin.module.css";
 import GoogleIcon from "../../assets/image/googleicon.png";
+import { GoogleLogin, GoogleOAuthProvider } from "@react-oauth/google";
+import { API_Signin, API_OAUTH } from "../../API/APIManager";
 
 const LeftBlock = () => {
   return <div className={styles.left_block_wrapper} />;
 };
 
-const checkSigninAvailable = (id, pw) => {
-  if (id === "admin" && pw === "admin") {
-    return true;
-  } else {
-    return false;
-  }
-};
-
-const RightBlock = () => {
+const RightBlock = (props) => {
   const navigate = useNavigate();
   const [idValue, setId] = useState("");
   const [pwValue, setPw] = useState("");
@@ -60,11 +54,14 @@ const RightBlock = () => {
             </button>
             <button
               className={styles.signin_button}
-              onClick={() => {
-                if (checkSigninAvailable(idValue, pwValue)) {
-                  navigate("/dashboard");
+              onClick={async() => {
+                const result = await API_Signin(idValue, pwValue);
+                if (result.success) {
+                  const authKeys = result.data;
+                  props.handleAuth(authKeys[0], authKeys[1], idValue);
+                  navigate('/dashboard');
                 } else {
-                  alert("Fail");
+                  alert("Invalid Id or Password.");
                 }
               }}
             >
@@ -73,25 +70,27 @@ const RightBlock = () => {
           </div>
         </div>
         <div className={styles.google_signin_button_wrapper}>
-              <button
-                className={styles.google_signin_button}
-                onClick={() => {}}>
-                  <img src={GoogleIcon} className={styles.google_icon}/>
-                  <div className={styles.google_signin_title}>
-                    Sign in with Google
-                  </div>
-              </button>
-          </div>
+          <a
+            className={styles.google_signin_button}
+            href="http://localhost:8080/oauth2/authorization/google"
+            >
+              <img src={GoogleIcon} className={styles.google_icon}/>
+              <div className={styles.google_signin_title}>
+                Sign in with Google
+              </div>
+              {props.authDone ? navigate('/') : null}
+          </a>
+        </div>
       </div>
     </div>
   );
 };
 
-const Signin = () => {
+const Signin = (props) => {
   return (
     <div className={styles.signin}>
       <LeftBlock />
-      <RightBlock />
+      <RightBlock authDone={props.authDone} handleAuth={props.handleAuth} />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from "react";
 import styles from "../../assets/css/Storage/FileInfo.module.css";
 import favoriteIcon from "../../assets/image/blackstaricon.png";
 import notFavoriteIcon from "../../assets/image/staricon.png";
@@ -5,6 +6,7 @@ import infoIcon from "../../assets/image/infoicon.png";
 import fileIcon from "../../assets/image/fileicon.png";
 import folderIcon from "../../assets/image/foldericon.png";
 import { FormatBytes } from "../../logics/Formatter";
+import { API_GetFileInfo, API_GetFolderInfo, API_SetFileFavorite, API_SetFolderFavorite } from "../../API/APIManager";
 
 const FavoriteFile = (props) => {
   if (props.file) {
@@ -35,7 +37,7 @@ const FavoriteFile = (props) => {
                 : styles.darkmode_information_text
             }`}
           >
-            &nbsp;{props.file.title}
+            &nbsp;{props.file.name}
           </div>
         </div>
       </div>
@@ -71,7 +73,7 @@ const FavoriteFile = (props) => {
                 : styles.darkmode_information_text
             }`}
           >
-            &nbsp;{props.folder.title}
+            &nbsp;{props.folder.name}
           </div>
         </div>
       </div>
@@ -117,13 +119,11 @@ const Information = (props) => {
               : styles.darkmode_information_text
           }`}
         >
-          Size: {FormatBytes(props.file.size)}
+          Size: {FormatBytes(props.file.file_size)}
           <br></br>
-          Uploaded: {props.file.created_time}
+          Uploaded: {props.file.modified_time.split('T')[0]}
           <br></br>
-          Extension: 하하 고치삼
-          <br></br>
-          Parent folder: {props.file.folder_id}
+          Extension: {props.file.extension.split('/')[1]}
         </div>
       </div>
     );
@@ -166,11 +166,11 @@ const Information = (props) => {
               : styles.darkmode_information_text
           }`}
         >
-          Size: {FormatBytes(props.folder.size)}
+          Size: {FormatBytes(props.folderSize)}
           <br></br>
-          Uploaded: {props.folder.created_time}
+          Uploaded: {props.folder.created_time.split('T')[0]}
           <br></br>
-          Extension: 하하 고치삼
+          Files: {props.folder.files.length}
           <br></br>
         </div>
       </div>
@@ -179,20 +179,70 @@ const Information = (props) => {
 };
 
 const FileInfo = (props) => {
-  if (!props.file && !props.folder) {
-    return <div>No file or folder selected</div>;
+  // if (!props.file && !props.folder) {
+  //   return <div>No file or folder selected</div>;
+  // }
+  const [file, setFile] = useState(null);
+  const [folder, setFolder] = useState(null);
+  const [folderSize, setFolderSize] = useState(0);
+
+  async function handleFavorite(targetFolder, targetFile) {
+    if (targetFolder) {
+      let result = await API_SetFolderFavorite(targetFolder.id, localStorage.getItem('userInfo').split(',')[0].split(":")[1]);
+      getFolderInfo();
+      props.handleFavChange();
+    }
+
+    if (targetFile) {
+      let result = await API_SetFileFavorite(targetFile.id, localStorage.getItem('userInfo').split(',')[0].split(":")[1]);
+      getFileInfo();
+      props.handleFavChange();
+    }
+  };
+
+  async function getFileInfo() {
+    if (props.file !== null) {
+      const result = await API_GetFileInfo(props.file);
+      setFile(result);
+    } else {
+      setFile(null);
+    }
   }
+  
+  async function getFolderInfo() {
+    if (props.folder !== null) {
+      const result = await API_GetFolderInfo(props.folder);
+      setFolder(result);
+      let size = 0;
+      result.files.forEach((el) => {
+        size += el.file_size;
+      })
+      setFolderSize(size);
+    } else {
+      setFolder(null);
+    }
+  }
+
+  useEffect(() => {
+    getFileInfo();
+  }, [props.file])
+
+  useEffect(() => {
+    getFolderInfo();
+  }, [props.folder])
+
   return (
     <div className={styles.fileinfo_wrapper}>
       <FavoriteFile
-        file={props.file}
-        folder={props.folder}
+        file={file}
+        folder={folder}
         colorTheme={props.colorTheme}
-        onFavorite={props.onFavorite}
+        onFavorite={handleFavorite}
       ></FavoriteFile>
       <Information
-        file={props.file}
-        folder={props.folder}
+        file={file}
+        folder={folder}
+        folderSize={folderSize}
         colorTheme={props.colorTheme}
       ></Information>
     </div>

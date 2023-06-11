@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import styles from '../../assets/css/Search/Search.module.css';
 import Header from '../Header/Header';
@@ -11,6 +11,7 @@ const Search = (props) => {
     const colorTheme = props.colorTheme;
     const navigate = useNavigate(); 
     const fileList = props.searchedFiles;
+
     return(
         <div className={`${styles.search_wrapper} ${colorTheme === 'light' ? null : styles.darkmode_bgcolor}`}>
             <Header colorTheme={colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
@@ -18,6 +19,7 @@ const Search = (props) => {
                 <Sidebar currentPage="search"/>
                 <div className={styles.search_block}>
                     <FileList
+                        curPage={"search"}
                         navigate={navigate}
                         onDelete={props.handleDelete}
                         fileList={props.files}
@@ -35,6 +37,7 @@ const Search = (props) => {
                         colorTheme={colorTheme}
                     />
                     <FileInfo
+                        handleFavChange={props.handleFavChange}
                         file={props.selectedFile}
                         folder={props.selectedFolder}
                         colorTheme={colorTheme}

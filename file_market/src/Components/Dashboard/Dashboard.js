@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Chart from './Dashboard_Chart';
 import FileTable from './Dashboard_Table';
@@ -8,17 +8,20 @@ import styles from '../../assets/css/Dashboard/Dashboard.module.css';
 import ColorThemeChanger from '../ColorThemeChanger/Color_Theme_Changer';
 
 const Dashboard = (props) => {
+    const userInfo = props.userInfo;
     const navigate = useNavigate();
     const colorTheme = props.colorTheme;
+    const [files, setFiles] = useState([]);
+    const [folders, setFolders] = useState([]);
 
     return(
         <div className={`${styles.dashboard_wrapper} ${colorTheme === 'light' ? null : styles.darkmode_bgcolor}`}>
-            <Header colorTheme={props.colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
+            <Header userInfo={userInfo} colorTheme={props.colorTheme} navigate={navigate} handleSearch={props.handleSearch} />
             <div className={styles.dashboard_block_wrapper}>
                 <Sidebar colorTheme={props.colorTheme} currentPage="dashboard"/>
                 <div className={styles.dashboard_block}>
-                    <Chart extensionCategory={props.extensionCategory} colorTheme={colorTheme} fileList={props.files} />
-                    <FileTable colorTheme={colorTheme} fileList={props.files} />
+                    <Chart extensionCategory={props.extensionCategory} colorTheme={colorTheme} fileList={files} />
+                    <FileTable userInfo={userInfo} colorTheme={colorTheme} />
                 </div>
             </div>
             <ColorThemeChanger colorTheme={props.colorTheme} handleChangeColorTheme={props.handleChangeColorTheme}/>

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { STATESNAMING } from "./Configuration/StatesNaing";
-import * as API_MANAGER from "./API/APIManager";
 import Signin from "./Components/Sign/Signin";
 import Signup from "./Components/Sign/Signup";
 import Storage from "./Components/Storage/Storage";
@@ -10,6 +9,7 @@ import Bin from "./Components/Bin/Bin";
 import Favorite from "./Components/Favorite/Favorite";
 import Search from "./Components/Search/Search";
 import { Categorize } from "./logics/Categorize";
+import * as API_MANAGER from "./API/APIManager";
 
 const dummyFileList = [
   {
@@ -204,17 +204,47 @@ const dummyFolderList = [
 ];
 
 function App() {
-  const [colorTheme, setColorTheme] = useState(
-    STATESNAMING.COLORTHEME.LIGHTTHEME
-  );
+  const [colorTheme, setColorTheme] = useState(STATESNAMING.COLORTHEME.LIGHTTHEME);
+  const [authKey, setAuthKey] = useState(null);
+  const [authRefreshKey, setAuthRefreshKey] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
+  const [authDone, setAuthDone] = useState(false);
   const [searchKey, setSearchKey] = useState(null);
   const [searchedFiles, setSearchedFiles] = useState([]);
   const [searchedFolders, setSearchedFolders] = useState([]);
+  const [files, setFiles] = useState([]); // file list
+  const [folders, setFolders] = useState([]); // folder list
   const [deletedFiles, setDeletedFiles] = useState([]);
   const [deletedFolders, setDeletedFolders] = useState([]);
   const [favoriteFiles, setFavoriteFiles] = useState([]);
   const [favoriteFolders, setFavoriteFolders] = useState([]);
+  const [favChange, setFavChange] = useState(0);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [selectedFolder, setSelectedFolder] = useState(null);
+  const [currentFolderId, setCurrentFolderId] = useState(null); // 더블클릭한 folder's id
+  const [currentFolderName, setCurrentFolderName] = useState("My Storage");
   const [extensionCategory, setExtensionCategory] = useState({});
+
+  function handleFavChange() {
+    setFavChange(prev => prev + 1);
+  }
+
+  async function handleAuth(auth, refresh, email) {
+    setAuthKey(auth);
+    setAuthRefreshKey(refresh);
+    const result = await API_MANAGER.API_GetUserInfo(email);
+    setUserInfo(result);
+    localStorage.setItem('userInfo', JSON.stringify(result));
+    // makeFileList(result.id);
+    setAuthDone(true);
+  }
+
+  // useEffect(() => {
+  //   if (authDone) {
+  //     makeFileList(userInfo.id);
+  //     setAuthDone(false);
+  //   }
+  // }, [authDone])
 
   function getDeletedList() {
     setSearchKey(null);
@@ -257,31 +287,23 @@ function App() {
     } else if (colorTheme === STATESNAMING.COLORTHEME.DARKTHEME) {
       setColorTheme(STATESNAMING.COLORTHEME.LIGHTTHEME);
     }
-    console.log(colorTheme);
   }
 
   function handleSearch(key) {
+    console.log(key);
+    localStorage.setItem("searchKey", key);
     setSearchKey(key);
   }
 
-  const [files, setFiles] = useState(dummyFileList); // file list
-
-  const [selectedFile, setSelectedFile] = useState(null);
-
-  const handleFileSelect = (file) => {
-    setSelectedFile(file);
+  const handleFileSelect = (fileId) => {
+    setSelectedFolder(null);
+    setSelectedFile(fileId);
   };
 
-  const [folders, setFolders] = useState(dummyFolderList); // folder list
-
-  const [selectedFolder, setSelectedFolder] = useState(null);
-
-  const handleFolderSelect = (folder) => {
-    setSelectedFolder(folder);
+  const handleFolderSelect = (folderId) => {
+    setSelectedFile(null);
+    setSelectedFolder(folderId);
   };
-
-  const [currentFolderId, setCurrentFolderId] = useState(null); // 더블클릭한 folder's id
-  const [currentFolderName, setCurrentFolderName] = useState("My Storage");
 
   const handleFolderDoubleClick = (folder, navigate) => {
     setCurrentFolderId(folder.id);
@@ -290,27 +312,29 @@ function App() {
   };
 
   // 선택된 폴더의 하위 파일 & 폴더 필터링
-  const filteredFiles = files.filter(
-    (file) => file.folder_id == currentFolderId
+  const filteredFiles = dummyFileList.filter(
+    (file) => file.id == currentFolderId
   );
-  const filteredFolders = folders.filter((folder) =>
+  const filteredFolders = dummyFolderList.filter((folder) =>
     currentFolderId ? folder.id == currentFolderId : folder
   );
 
-  const handleNewFolder = () => {
+  async function handleNewFolder() {
     const folderName = prompt("Enter folder name!");
     if (folderName) {
-      const newFolder = {
-        id: Date.now(), // 고유한 id 생성. (임시로 현재 시간 사용)
-        title: folderName,
-        created_time: new Date().getTime(),
-        deleted_time: null,
-        favorite: false,
-        user_id: 1,
-        trash: false,
-        size: 34235,
-      };
-      setFolders((prevFolders) => [...prevFolders, newFolder]); // 새로운 폴더 추가
+      const result = await API_MANAGER.API_CreateFolder(localStorage.getItem('userInfo').split(',')[0].split(":")[1], folderName);
+      console.log(result);
+      // const newFolder = {
+      //   id: Date.now(), // 고유한 id 생성. (임시로 현재 시간 사용)
+      //   title: folderName,
+      //   created_time: new Date().getTime(),
+      //   deleted_time: null,
+      //   favorite: false,
+      //   user_id: 1,
+      //   trash: false,
+      //   size: 34235,
+      // };
+      // setFolders((prevFolders) => [...prevFolders, newFolder]); // 새로운 폴더 추가
     }
   };
 
@@ -395,36 +419,15 @@ function App() {
   };
 
   useEffect(() => {
-    getDeletedList();
-    getFavoriteList();
-    const cate = Categorize(dummyFileList);
-    setExtensionCategory(cate);
-  }, []);
-
-  useEffect(() => {
-    if (searchKey !== null) {
-      const arr1 = [];
-      dummyFileList.forEach((file) => {
-        if (file.title.includes(searchKey)) {
-          arr1.push(file);
-        }
-      });
-      setSearchedFiles(arr1);
-      const arr2 = [];
-      dummyFolderList.forEach((folder) => {
-        if (folder.title.includes(searchKey)) {
-          arr2.push(folder);
-        }
-      });
-      setSearchedFolders(arr2);
-    }
-  }, [searchKey]);
+    localStorage.setItem("currentFolderId", 1);
+    localStorage.setItem("searchKey", null);
+  }, [])
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Signin colorTheme={colorTheme} />} />
-        <Route path="signup" element={<Signup colorTheme={colorTheme} />} />
+        <Route path="/" element={<Signin authDone={authDone} handleAuth={handleAuth}/>} />
+        <Route path="signup" element={<Signup />} />
         <Route
           path="storage/:folder_id"
           element={
@@ -452,6 +455,9 @@ function App() {
           path="dashboard"
           element={
             <Dashboard
+              userInfo={userInfo}
+              authKey={authKey}
+              authRefreshKey={authRefreshKey}
               extensionCategory={extensionCategory}
               handleSearch={handleSearch}
               colorTheme={colorTheme}
@@ -476,6 +482,8 @@ function App() {
           path="storage"
           element={
             <Storage
+              handleFavChange={handleFavChange}
+              favChange={favChange}
               handleSearch={handleSearch}
               colorTheme={colorTheme}
               handleChangeColorTheme={handleChangeColorTheme}
@@ -500,6 +508,8 @@ function App() {
           path="favorite"
           element={
             <Favorite
+              handleFavChange={handleFavChange}
+              favChange={favChange}
               handleSearch={handleSearch}
               colorTheme={colorTheme}
               handleChangeColorTheme={handleChangeColorTheme}
@@ -524,6 +534,8 @@ function App() {
           path="bin"
           element={
             <Bin
+              handleFavChange={handleFavChange}
+              favChange={favChange}
               handleSearch={handleSearch}
               colorTheme={colorTheme}
               handleChangeColorTheme={handleChangeColorTheme}
@@ -547,6 +559,8 @@ function App() {
           path="search"
           element={
             <Search
+              handleFavChange={handleFavChange}
+              favChange={favChange}
               handleSearch={handleSearch}
               colorTheme={colorTheme}
               handleChangeColorTheme={handleChangeColorTheme}

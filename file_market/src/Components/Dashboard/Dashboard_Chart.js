@@ -3,11 +3,12 @@ import ReactApexChart from 'react-apexcharts';
 import styles from '../../assets/css/Dashboard/Dashboard_Chart.module.css';
 import { CDropdown, CDropdownItem, CDropdownToggle, CDropdownMenu } from '@coreui/react'
 import '@coreui/coreui/dist/css/coreui.min.css'
+import { Categorize } from '../../logics/Categorize';
+import * as API_MANAGER from '../../API/APIManager';
 import { FormatBytes, FormatNumber } from '../../logics/Formatter';
+import { API_TotalSize } from '../../API/APIManager';
 
 const ChartModeButton = (props) => {
-    const total_button = props.chartMode === 'total' ? styles.dashboard_chart_cur_mode_button : styles.dashboard_chart_mode_button;
-    const extension_button = props.chartMode === 'extension' ? styles.dashboard_chart_cur_mode_button : styles.dashboard_chart_mode_button;
 
     return(
         <div className={styles.dashboard_chart_mode_button_wrapper}>
@@ -25,18 +26,14 @@ const ChartModeButton = (props) => {
 }
 
 const Chart = (props) => {
-    const [fileList, setFileList] = useState(props.fileList);
-    const maxSize = 15000000000;
-    const [totalSize, setTotalSize] = useState(() => {
-        let sum = 0;
-        for (let i = 0; i < fileList.length; i++) {
-            sum += fileList[i].size;
-        }
-        return sum;
-    });
-
+    const [fileList, setFileList] = useState([]);
+    const maxSize = 10000000;
+    const [usedSize, setUsedSize] = useState(0);
+    const [Series, setSeries] = useState([]);
+    const [extensionCategory, setExtensionCategory] = useState([0, 0, 0, 0]);
+    const extensionLabel = ["image", "txt", "application", "etc"];
     const [totalData, setTotalData] = useState({
-        series: [totalSize, maxSize - totalSize],
+        series: Series,
         options: {
             chart: {
                 type: 'donut',
@@ -50,14 +47,6 @@ const Chart = (props) => {
             plotOptions: {
                 pie: {
                     donut: {
-                    // hollow: {  
-                    //   margin: 15,
-                    //   size: '70%',
-                    //   image: '../../css/images/a-icon.jpg',
-                    //   imageWidth: 64,
-                    //   imageHeight: 64,
-                    //   imageClipped: false
-                    // },
                         labels: {
                             show: true,
                             value: {
@@ -71,18 +60,11 @@ const Chart = (props) => {
                 }
             },
             labels: ["used", "free"],
-            // title: {
-            //     text: 'Total',
-            //     align: 'center'
-            // },
         },
     });
 
-    const extensionLabel = ["code", "image", "video", "doc", "ect"];
-    const extensionSeries = [props.extensionCategory['code'], props.extensionCategory['image'], props.extensionCategory['video'], props.extensionCategory['doc'], props.extensionCategory['etc']];
-
     const [extensionData, setExtensionData] = useState({
-        series: extensionSeries,
+        series: Series,
         options: {
             chart: {
                 type: 'donut',
@@ -113,13 +95,8 @@ const Chart = (props) => {
                 }
             },
             labels: extensionLabel,
-            // title: {
-            //     text: 'Extension',
-            //     align: 'center',
-            // },
         },
     });
-
     const [chartMode, setChartMode] = useState('total');
     const [chartData, setChartData] = useState(totalData);
 
@@ -127,20 +104,51 @@ const Chart = (props) => {
         if (chartMode !== toMode) {
             setChartMode(toMode);
             if (toMode === 'total') {
+                setSeries([usedSize, maxSize - usedSize]);
                 setChartData(totalData);
             } else {
+                setSeries(extensionCategory);
                 setChartData(extensionData);
             }
         }
     }
 
+    async function makeFileList(userId) {
+        let result = await API_MANAGER.API_UserFileList(userId);
+        const cate = Categorize(await result);
+        setExtensionCategory(cate);
+        console.log(cate);
+    }
+
+
+    async function getTotalSize(userId) {
+        let result = await API_TotalSize(userId);
+        setSeries([result, maxSize - result]);
+        setUsedSize(result);
+    }
+
+    useEffect(() => {
+        makeFileList(localStorage.getItem('userInfo').split(',')[0].split(":")[1]);
+        getTotalSize(localStorage.getItem('userInfo').split(',')[0].split(":")[1]);
+    }, [])
+
     return(
         <div className={styles.dashboard_chart_wrapper}>
-            <ChartModeButton handleModeChange={handleModeChange} chartMode={chartMode}/>
+            <div className={styles.dashboard_chart_mode_button_wrapper}>
+                <CDropdown>
+                    <CDropdownToggle color='secondary'>
+                        {chartMode === 'total' ? "Total" : "Extension"}
+                    </CDropdownToggle>
+                    <CDropdownMenu>
+                        <CDropdownItem onClick={() => handleModeChange('total')}>Total</CDropdownItem>
+                        <CDropdownItem onClick={() => handleModeChange('extension')}>Extension</CDropdownItem>
+                    </CDropdownMenu>
+                </CDropdown>
+            </div>
             <div className={styles.dashboard_chart_block}>
                 <ReactApexChart 
                     options={chartData.options}
-                    series={chartData.series}
+                    series={Series}
                     type="donut" 
                     width="500"
                 />

@@ -3,6 +3,7 @@ import UserProfileImg from "../../assets/image/userprofileimage.png";
 import styles from "../../assets/css/Header/Header_Userprofile.module.css";
 
 const UserProfile = (props) => {
+  const userInfo = props.userInfo;
   const colorTheme = props.colorTheme;
   const [isModalOpen, setModalOpen] = useState(false);
 
@@ -12,13 +13,6 @@ const UserProfile = (props) => {
 
   const handleCloseModal = () => {
     setModalOpen(false);
-  };
-
-  // 모달 내부에 표시할 유저 정보
-  const user = {
-    name: "김나현",
-    email: "knh4769@khu.ac.kr",
-    role: "User",
   };
 
   return (
@@ -41,9 +35,9 @@ const UserProfile = (props) => {
             <div className={styles.modal_content}>
               <h3>User Profile</h3>
               <br></br>
-              <p>Name: {user.name}</p>
-              <p>Email: {user.email}</p>
-              <p>Role: {user.role}</p>
+              <p>Name: {userInfo.name}</p>
+              <p>Email: {userInfo.email}</p>
+              <p>Role: {userInfo.role}</p>
               <div className={styles.modal_button_wrapper}>
                 <button onClick={handleCloseModal}>Close</button>
               </div>

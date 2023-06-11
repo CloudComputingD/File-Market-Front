@@ -1,3 +1,4 @@
+import React from "react";
 import { useNavigate } from "react-router-dom";
 import Sidebar from "../Sidebar/Sidebar";
 import Header from "../Header/Header";
@@ -26,6 +27,7 @@ const Storage = (props) => {
         <Sidebar currentPage="storage" />
         <div className={styles.storage_block}>
           <FileList
+            curPage={"storage"}
             navigate={navigate}
             onDelete={props.handleDelete}
             fileList={props.files}
@@ -43,6 +45,7 @@ const Storage = (props) => {
             colorTheme={colorTheme}
           />
           <FileInfo
+            handleFavChange={props.handleFavChange}
             file={props.selectedFile}
             folder={props.selectedFolder}
             colorTheme={colorTheme}
