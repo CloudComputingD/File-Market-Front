@@ -44,6 +44,15 @@ const FileTable = (props) => {
         }
     }
 
+    async function handleDelete() {
+        checkItems.forEach(async(file) => {
+            const result = await API_MANAGER.API_TrashDeleteFile(file, localStorage.getItem('userInfo').split(',')[0].split(":")[1]);
+        })
+        setCheckItems([]);
+        makeFileList(localStorage.getItem('userInfo').split(',')[0].split(":")[1]);
+        // console.log(checkItems);
+    }
+
     function handleCurMode(clicked) {
         if (curMode === 'size' && clicked === 'date') {
             setCurMode('date');
@@ -93,7 +102,8 @@ const FileTable = (props) => {
                     </div>
                     <div className={styles.table_delete_button_wrapper}>
                         <button
-                            className={styles.table_delete_button}>
+                            className={styles.table_delete_button}
+                            onClick={() => {handleDelete()}}>
                             delete
                         </button>
                     </div>
