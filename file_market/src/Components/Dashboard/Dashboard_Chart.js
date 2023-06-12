@@ -27,7 +27,7 @@ const ChartModeButton = (props) => {
 
 const Chart = (props) => {
     const [fileList, setFileList] = useState([]);
-    const maxSize = 10000000;
+    const maxSize = 10737418240;
     const [usedSize, setUsedSize] = useState(0);
     const [Series, setSeries] = useState([]);
     const [extensionCategory, setExtensionCategory] = useState([0, 0, 0, 0]);

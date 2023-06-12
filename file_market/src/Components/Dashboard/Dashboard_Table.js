@@ -64,7 +64,7 @@ const FileTable = (props) => {
         if (orderKey === 'size') {
             const result = [...fileList].sort(function (a, b) {
                 if (a.extension !== '' && b.extension !== '') {
-                    return a.size > b.size ? -1 : a.size < b.size ? 1 : 0;
+                    return a.file_size > b.file_size ? -1 : a.file_size < b.file_size ? 1 : 0;
                 }
             })
             return result;
@@ -87,7 +87,7 @@ const FileTable = (props) => {
                             </CDropdownToggle>
                             <CDropdownMenu>
                                 <CDropdownItem onClick={() => handleCurMode('size')}>Size</CDropdownItem>
-                                <CDropdownItem onClick={() => handleCurMode('date')}>Deleted Date</CDropdownItem>
+                                <CDropdownItem onClick={() => handleCurMode('date')}>Date</CDropdownItem>
                             </CDropdownMenu>
                         </CDropdown>
                     </div>
